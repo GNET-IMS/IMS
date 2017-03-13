@@ -1,5 +1,26 @@
 {
   "entry": "src/index.js",
+  "disableCSSModules": false,
+  "publicPath": "/",
+  "outputPath": "./dist",
+  "extraBabelPlugins": [
+    "transform-runtime",
+    [
+      "import", 
+      { 
+        "libraryName": "antd", 
+        "libarayDirectory": "lib", 
+        "style": "css" 
+      }
+    ]
+  ],
+  "extraPostCSSPlugins": [],
+  "autoprefixer": null,
+  "proxy": null,
+  "externals": null,
+  "multipage": false,
+  "define": null,
+  "theme": null,
   "env": {
     "development": {
       "extraBabelPlugins": [

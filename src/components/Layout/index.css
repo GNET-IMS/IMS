@@ -1,0 +1,29 @@
+.layout {
+    height: 100%;
+}
+
+.layout>div {
+    float: left;
+}
+
+.layout-right {
+    width: 85%;
+    height: 100%;
+}
+
+.layout-breadcrumb {
+    height: 20px;
+}
+
+.layout-main {
+    background: #f3f3f3;
+    height: calc(100% - 40px);
+    padding: 10px 20px;
+}
+
+.layout-content {
+    background: #fff;
+    margin: 10px 0;
+    min-height: calc(100% - 40px);
+    padding: 20px;
+}

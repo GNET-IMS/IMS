@@ -1,0 +1,33 @@
+.guideMenu {
+    width: 15%;
+    height: 100%;
+}
+
+.logo {
+    height: 100px;
+    background: #404040;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    padding: 15px;
+}
+.menu {
+    height: calc(100% - 100px);
+    overflow-y: auto;
+}
+
+.menu::-webkit-scrollbar {
+    width: 4px;
+    height: 16px;
+    background-color: #222;
+}
+
+.menu::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #222;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    height: 20px;
+    border-radius: 2px;
+    background-color: #555;
+}

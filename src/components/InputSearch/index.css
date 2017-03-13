@@ -1,0 +1,19 @@
+.inputSearch {
+    display: inline-block;
+}
+
+.inputSearch>span {
+    display: inline;
+}
+
+.inputSearch :global(.ant-input) {
+    width: 120px;
+}
+
+.search-btn {
+    position: relative;
+    top: 1px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    height: 28px;
+}
