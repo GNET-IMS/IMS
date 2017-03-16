@@ -23,12 +23,12 @@ class Header extends React.Component {
           mode="horizontal"
           className={styles['header-right']}
         >
-          <SubMenu key="/message" title={<Icon type="bell" />}>
+          <SubMenu key="/message" title={<Icon style={{color:"rgb(189, 189, 189)"}} type="mail" />}>
             <Menu.Item key="/message">
                 <Link to="/message">消息</Link>
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="/logout" title={<Icon type="user" />}>
+          <SubMenu key="/logout" title={<Icon style={{color:"rgb(189, 189, 189)"}} type="user" />}>
             <Menu.Item key="/logout">
                 <Link to="/logout">注销</Link>
             </Menu.Item>

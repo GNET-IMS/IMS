@@ -5,11 +5,12 @@ import selector from '../models/accounts/selector';
 import Accounts from '../components/Accounts';
 import Edit from '../components/Accounts/Edit';
 import Add from '../components/Accounts/Add';
+import BatchAdd from '../components/Accounts/BatchAdd';
 
-const AccountPage = ({accounts}) => {
+const AccountPage = ({accounts,dispatch}) => {
   return (
     <div className={styles['account']}>
-      <Accounts data={accounts.accounts}></Accounts>
+      <Accounts dispatch={dispatch} data={accounts.accounts}></Accounts>
     </div>
   );
 }
@@ -20,9 +21,11 @@ AccountPage.propTypes = {
 const Account = connect(selector)(AccountPage);
 const AccountEdit = connect(selector)(Edit);
 const AccountAdd = connect(selector)(Add);
+const AccountBatchAdd = connect(selector)(BatchAdd);
 
 export {
   Account as default,
   AccountEdit,
   AccountAdd,
+  AccountBatchAdd,
 }
