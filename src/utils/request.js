@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import { ROOT_PATH } from '../constans';
 
 function parseJSON(response) {
   return response.json();
@@ -14,6 +15,23 @@ function checkStatus(response) {
   throw error;
 }
 
+function getFullUrl(url) {
+  return url.indexOf('/') === 0 ? ROOT_PATH + url : ROOT_PATH + '/' + url
+}
+
+export function parseError(error) {
+  try {
+    return error.response.json();
+  } catch (err) {
+    return Promise.resolve({
+      timestamp: new Date().getTime(),
+      message: 'unkown error',
+      status: error.response && error.response.status,
+    });
+  }
+
+}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -22,7 +40,7 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  return fetch(getFullUrl(url), options)
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ({ data }))

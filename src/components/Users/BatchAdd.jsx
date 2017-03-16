@@ -52,7 +52,7 @@ class BatchAdd extends Component {
           dataAll.push(user0, user1, user2, user3, user4);
           console.log(dataAll);
           dispatch({
-            type: 'accounts/addmore',
+            type: 'users/addmore',
             payload: dataAll,
           })
 		  
