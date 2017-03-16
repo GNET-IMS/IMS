@@ -20,6 +20,9 @@ export async function create(access_token, account) {
     body: JSON.stringify(account)
   })
 }
+export async function createmore(access_token, account) {
+  
+}
 
 export async function remove(access_token, id) {
   return request(`/api/accounts/${id}`, {
