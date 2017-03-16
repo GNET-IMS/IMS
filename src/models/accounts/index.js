@@ -4,23 +4,18 @@ import {create, createmore, view, remove, search} from '../../services/accounts'
 import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 
-const mergeQuery = (oldQuery, newQuery) => {
-  return {
-    ...oldQuery,
-    ...newQuery,
-    page: (newQuery.page ? newQuery.page - 1 : 0),
-  }
-}
-
 const initialState = {
   query: {},
   accounts: [
     {
       id: '1',
       name: 'yehq',
+      is_admin: "false",
       username: 'yehq',
       password: '1234',
       type: 'github1',
+      sex: 1,
+      email: '110@qq.com',
       createDate: '2016-02-13',
     },
   ],

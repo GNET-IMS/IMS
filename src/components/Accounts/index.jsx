@@ -75,6 +75,7 @@ const Accounts = ({data, dispatch, accounts}) => {
       render: (text, record, index) => (
         <span>
           <Link to={`/account/list/edit/${text}`}><Icon type="edit" />编辑</Link>
+          <Link to={`/account/list/view/${text}`}><Icon type="file-text" style={{marginLeft:10}} />查看</Link>
           <Popconfirm title="确定要删除这个用户吗？" onConfirm={ () => {  
                          
             dispatch({
