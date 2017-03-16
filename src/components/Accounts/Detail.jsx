@@ -35,11 +35,7 @@ class Detail extends Component {
         { required: true, message: '部门不得为空' }
       ]
     });
-    const titleProps = getFieldProps('title', {
-      rules: [
-        { required: true, message: '职位不得为空' }
-      ]
-    });
+    const titleProps = getFieldProps('title');
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 10 },

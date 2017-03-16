@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import {create, view, remove, search} from '../../services/accounts';
+import {create, createmore, view, remove, search} from '../../services/accounts';
 import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 
@@ -126,6 +126,30 @@ export default {
 
       /*const access_token = yield select( state => state.oauth.access_token );
       const { data, error } = yield create(access_token, payload);
+      if (!error) {
+    	yield message.success('添加成功', 2);
+        yield put(routerRedux.goBack());
+      } else {
+    	  const err = yield parseError(error);
+        yield message.error(`添加失败：${err.message}`, 3);
+      }*/
+      yield put({
+        type: 'toggleSubmiting',
+        payload: false,
+      });
+    },
+    *addmore({ payload }, { put, call, select }) {
+      yield put({
+        type: 'toggleSubmiting',
+        payload: true,
+      });
+      yield put({
+        type: 'setCurrent',
+        payload,
+      });     
+
+      /*const access_token = yield select( state => state.oauth.access_token );
+      const { data, error } = yield createmore(access_token, payload);
       if (!error) {
     	yield message.success('添加成功', 2);
         yield put(routerRedux.goBack());
