@@ -1,17 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Form, Row, Col, Input, Button, Select } from 'antd';
+import { routerRedux } from 'dva/router';
 
-class Add extends Component {
+import Detail from './Detail';
 
+const Add = (props) => {
+  const { dispatch } = props;
+  return (
+    <Detail
+      {...props}
 
-  render() {
-    return (
-      <div>
-      </div>
-    );
-  }
-};
-
-Add.propTypes = {
-};
+      type="add"
+      mapPropsToFields={ () => ({}) }
+      onSubmit={ (e, form) => {
+        e.preventDefault();
+        
+        form.validateFieldsAndScroll((errors, values) => {
+          if (!!errors) {
+            return;
+          }
+		  
+          const formData = form.getFieldsValue();
+          dispatch({
+            type: 'accounts/add',
+            payload: formData,
+          })
+		  
+        });
+		
+      } }
+    />
+  )
+}
 
 export default Add;

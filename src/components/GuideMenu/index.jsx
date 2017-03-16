@@ -27,9 +27,9 @@ class GuideMenu extends React.Component {
           mode="inline"
           className={styles['menu']}
         >
-          <SubMenu key="/account/list" title={<span><Icon type="mail" /><span>账号信息</span></span>}>
+          <SubMenu key="/account/list" title={<span><Icon type="mail" /><span>职员信息</span></span>}>
             <Menu.Item key="/account/list">
-                <Link to="/account/list">账号管理</Link>
+                <Link to="/account/list">职员管理</Link>
             </Menu.Item>
           </SubMenu>
         </Menu>
