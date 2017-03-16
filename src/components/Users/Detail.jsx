@@ -10,7 +10,7 @@ class Detail extends Component {
     super(props);
   }
   render() {
-    const { accounts, form, dispatch, type, onSubmit, ...rest } = this.props;
+    const { users, form, dispatch, type, onSubmit, ...rest } = this.props;
     const { getFieldProps, getFieldError, isFieldValidating } = form;
     const nameProps = getFieldProps('name', {
       rules: [
@@ -182,7 +182,7 @@ Detail.defaultProps = {
 export default Form.create({
   mapPropsToFields: (props) => {
       const type = props.type;
-      const accounts = props.accounts.accounts[0];
+      const users = props.users.users[0];
       if(type=="add"){
           return {
             password: {
@@ -192,16 +192,16 @@ export default Form.create({
       }else{
           return {
             name: {
-                value: accounts.name,
+                value: users.name,
             },
             type: {
-                value: accounts.type,            
+                value: users.type,            
             },
             user: {
-                value: accounts.username,
+                value: users.username,
             },
             password: {
-                value: accounts.password,
+                value: users.password,
             },
           }
       }

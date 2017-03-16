@@ -20,7 +20,7 @@ const Edit = (props) => {
           
           const formData = form.getFieldsValue();
           dispatch({
-            type: 'accounts/edit',
+            type: 'users/edit',
             payload: formData,
           })
 		  

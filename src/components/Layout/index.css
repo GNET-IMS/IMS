@@ -1,5 +1,6 @@
 .layout {
     height: 100%;
+    overflow: hidden;
 }
 
 .layout>div {
@@ -17,13 +18,14 @@
 
 .layout-main {
     background: #f3f3f3;
-    height: calc(100% - 40px);
+    height: calc(100% - 50px);
     padding: 10px 20px;
 }
 
 .layout-content {
     background: #fff;
-    margin: 10px 0;
-    min-height: calc(100% - 40px);
+    margin-top: 10px;
+    height: calc(100% - 40px);
     padding: 20px;
+    overflow-y: auto;
 }

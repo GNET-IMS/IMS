@@ -22,7 +22,7 @@ const Add = (props) => {
 		  
           const formData = form.getFieldsValue();
           dispatch({
-            type: 'accounts/add',
+            type: 'users/add',
             payload: formData,
           })
 		  

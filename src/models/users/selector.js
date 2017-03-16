@@ -1,5 +1,5 @@
 export default state => {
     return {
-        accounts: state.accounts,
+        users: state.users,
     }
 }
