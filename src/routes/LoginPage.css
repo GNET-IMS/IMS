@@ -1,0 +1,30 @@
+.bg{
+    background-image: url(../assets/bg.png);
+    background-size: 100% 660px; 
+    width: 100%;
+    height: 660px;
+    position: relative;
+}
+.box{
+    width: 24%;
+    height: 348px;
+    background-color: white;
+    text-align: center;
+    position: absolute;
+    top: 118px;
+    left: 56%;
+}
+.box .avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    margin: 30px auto;
+    background-color: rgb(194, 213, 218);
+}
+.box .ipt{
+    background-color: white;
+    width: 60%;
+}
+.box .signIn{
+    width: 60%;
+}
