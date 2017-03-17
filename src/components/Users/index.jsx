@@ -3,11 +3,12 @@ import { Row, Table, Button, Popconfirm, Icon } from 'antd';
 import { Link } from 'dva/router';
 import InputSearch from '../InputSearch';
 import ActionBar from '../ActionBar';
+import BaseTable from '../BaseTable';
 import styles from './index.css';
 
 const ButtonGroup = Button.Group;
 
-const Users = ({data, dispatch, users}) => {
+const Users = ({dispatch, users, loading}) => {
   const columns = [
     {
       title: '序号',
@@ -86,7 +87,19 @@ const Users = ({data, dispatch, users}) => {
         </Button>
         </ButtonGroup>
       </ActionBar>
-      <Table columns={columns} dataSource={data} rowSelection={{}} rowKey='__id' onChange={() => {}} />
+      <BaseTable 
+        pagination={users.pagination} 
+        loading={loading} 
+        columns={columns} 
+        dataSource={users.users} 
+        rowSelection={{}} 
+        rowKey='_id' 
+        defaultOnChangeCallback={(query) => {
+          dispatch({
+            type: 'users/search',
+            payload: query
+          })
+        }} />
     </div>
   );
 };

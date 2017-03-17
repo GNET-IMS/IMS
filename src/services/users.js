@@ -2,7 +2,7 @@ import request from '../utils/request';
 import querystring from 'querystring';
 
 export async function search(access_token, payload) {
-  return request(`/api/users?${querystring.stringify(payload)}`, {
+  return request(`/api/users?query=${JSON.stringify(payload)}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${access_token}`,

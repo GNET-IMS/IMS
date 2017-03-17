@@ -7,10 +7,10 @@ import Edit from '../components/Users/Edit';
 import Add from '../components/Users/Add';
 import BatchAdd from '../components/Users/BatchAdd';
 
-const UsersPage = ({users, dispatch}) => {
+const UsersPage = ({users, dispatch, loading}) => {
   return (
     <div className={styles['user']}>
-      <Users dispatch={dispatch} data={users.users}></Users>
+      <Users dispatch={dispatch} users={users} loading={loading}></Users>
     </div>
   );
 }

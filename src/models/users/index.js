@@ -17,6 +17,11 @@ const initialState = {
       createDate: '2016-02-13',
     },
   ],
+  pagination: {
+    current: 1, 
+    total: 100,
+    pageSize: 10,
+  },
   submiting: false,
   loadding: false,
   current: {},
@@ -63,11 +68,6 @@ export default {
 
   effects: {
     *search({ payload }, { put, select }) {
-      yield put({
-        type: 'toggleLoadding',
-        payload: true,
-      });
-
       const { access_token } = yield select( state => {
         return {
           'access_token': state.auth.access_token,
@@ -77,24 +77,16 @@ export default {
       if (!err) {
         yield put({
           type: 'setUsers',
-          payload: data.data && data.data.users,
-        });
-
-        yield put({
-          type: 'toggleLoadding',
-          payload: false,
+          payload: {
+            users: data.data && data.data.users,
+            pagination: data.data && data.data.pagination
+          },
         });
 
         yield message.success(data.message, 2);
 
         return true;
       }
-
-      yield put({
-        type: 'toggleLoadding',
-        payload: false,
-      });
-
       const error = yield parseError(err);
       yield message.error(`${error.message}`, 3);
       return false;
@@ -181,8 +173,8 @@ export default {
     setUser(state, { payload: user }) {
       return { ...state, user }
     },
-    setUsers(state, { payload: users}) {
-      return { ...state, users }
+    setUsers(state, { payload }) {
+      return { ...state, ...payload }
     },
     clear(state) {
       return initialState
