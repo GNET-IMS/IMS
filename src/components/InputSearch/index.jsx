@@ -11,10 +11,39 @@ class Example extends Component {
     select: false,
     selectDefaultValue: undefined,
     onSearch: () => {},
-    onChange: () => {},
+    onTextChange: () => {},
+    onSelectChange: () => {},
     placeholder: '请输入搜索内容',
     inputWidth: '120px',
     buttonType: 'primary',
+  }
+
+  state = {
+    textValue: "",
+    selectValue: "",
+  }
+
+  componentDidMount() {
+    const { selectDefaultValue, selectOptions } = this.props;
+    if (selectOptions.length > 0) {
+      this.setState({selectValue: selectOptions[0].value});
+    }
+  }
+  
+
+  onTextChange = e => {
+    const value = e.target.value;
+    const { onTextChange } = this.props;
+    this.setState({textValue: value}, () => {
+      onTextChange(value);
+    });
+  }
+
+  onSelectChange = (value) => {
+    const { onSelectChange } = this.props;
+    this.setState({selectValue: value}, () => {
+      onSelectChange(value);
+    })
   }
 
   renderSelectOptions = (selectOptions) => {
@@ -24,13 +53,14 @@ class Example extends Component {
   }
 
   render() {
-    const { selectOptions, select, selectDefaultValue, onSearch, inputWidth, placeholder, buttonType, onChange } = this.props;
+    const { selectOptions, select, selectDefaultValue, onSearch, inputWidth, placeholder, buttonType } = this.props;
+    const { textValue, selectValue } = this.state;
     return (
       <div className={styles['inputSearch']}>
         <InputGroup compact>
         {
           select ? 
-          <Select defaultValue={selectDefaultValue || (selectOptions.length > 0 ? selectOptions[0].value : undefined)}>
+          <Select defaultValue={selectDefaultValue || (selectOptions.length > 0 ? selectOptions[0].value : undefined)} onChange={this.onSelectChange}>
             {
               this.renderSelectOptions(selectOptions)
             }
@@ -41,9 +71,9 @@ class Example extends Component {
           <Input style={{
             borderRadius: 0,
             width: inputWidth
-          }} placeholder={placeholder} onChange={onChange}/>
+          }} placeholder={placeholder} onChange={this.onTextChange}/>
         </InputGroup>
-        <Button type={buttonType} className={styles['search-btn']} onClick={onSearch}>搜索</Button>
+        <Button type={buttonType} className={styles['search-btn']} onClick={() => onSearch(textValue, selectValue)}>搜索</Button>
       </div>
     );
   }

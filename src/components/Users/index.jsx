@@ -74,9 +74,20 @@ const Users = ({dispatch, users, loading}) => {
       <ActionBar>
         <InputSearch select={true} selectOptions={[
           { name: '姓名', value: 'name' },
-          { name: '类型', value: 'type' },
+          { name: '用户名', value: 'username' },
+          { name: '部门', value: 'department' },
+          { name: '邮箱', value: 'email' },
         ]}
-          onSearch={() => {}}
+          onSearch={(textValue, selectValue) => {
+            dispatch({
+              type: 'users/search',
+              payload: {
+                filters: {
+                  [selectValue]: textValue
+                }
+              }
+            })
+          }}
         />
         <ButtonGroup style={{float: 'right'}}>
         <Button size="large" type="primary">
@@ -93,7 +104,7 @@ const Users = ({dispatch, users, loading}) => {
         columns={columns} 
         dataSource={users.users} 
         rowSelection={{}} 
-        rowKey='_id' 
+        rowKey={record => record._id}
         defaultOnChangeCallback={(query) => {
           dispatch({
             type: 'users/search',

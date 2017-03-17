@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import {create, view, remove, search} from '../../services/users';
+import {create, view, remove, search, update} from '../../services/users';
 import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import { parseError } from '../../utils/request';
@@ -24,20 +24,7 @@ const initialState = {
   },
   submiting: false,
   loadding: false,
-  current: {
-        "_id": "58c7b1e697b7d7d6968bb7ff",
-        "username": "admin",
-        "password": "1234",
-        "sex": 1,
-        "email": "yedi728@qq.com",
-        "name": "yehq",
-        "birthday": "2018-02-13",
-        "department": "天堂",
-        "title": "前端",
-        "avatar_url": "/assets/imagesh1.jpg",
-        "is_admin": true,
-        "created_at": "2018-02-13"
-  },
+  current: {},
 
 }
 export default {
@@ -96,8 +83,6 @@ export default {
           },
         });
 
-        yield message.success(data.message, 2);
-
         return true;
       }
       const error = yield parseError(err);
@@ -111,47 +96,38 @@ export default {
         }
       } );
       const { data, err } = yield view(access_token, id);
-
       if (!err) {
         yield put({
           type: 'setUser',
           payload: data.data && data.data.user,
         });
-        yield message.success(data.message, 2);
         return true;
       }
 
-      yield message.err(`加载用户信息失败：${err.message}`, 3);
+      const error = yield parseError(err);
+      yield message.err(`加载用户信息失败：${error.message}`, 3);
       return false;
     },
     *add({ payload }, { put, call, select }) {
-      yield put({
-        type: 'toggleSubmiting',
-        payload: true,
-      });    
-
       const access_token = yield select( state => state.auth.access_token );
       const { data, err } = yield create(access_token, payload);
       if (!err) {
     	  yield message.success('添加成功', 2);
         yield put(routerRedux.goBack());
       } else {
-        yield message.err(`添加失败：${err.message}`, 3);
+        const error = yield parseError(err);
+        yield message.error(`添加失败：${error.message}`, 3);
       }
-      yield put({
-        type: 'toggleSubmiting',
-        payload: false,
-      });
     },
-    *edit({ payload }, { put, call, select }) {
-      yield put(routerRedux.goBack());      
+    *edit({ payload }, { put, call, select }) {   
       const access_token = yield select( state => state.auth.access_token );
-      const { data, err } = yield create(access_token, payload);
+      const { data, err } = yield update(access_token, payload);
       if (!err) {
     	  yield message.success('修改成功', 2);
         yield put(routerRedux.goBack());
       } else {
-        yield message.err(`修改失败：${err.message}`, 3);
+        const error = yield parseError(err);
+        yield message.error(`修改失败：${error.message}`, 3);
       }
       
     },
@@ -165,10 +141,11 @@ export default {
       
       if (!err) {
         yield message.success('成功删除用户', 2);
-        yield put({ type: 'search'})
+        yield put({ type: 'search' })
         return true;
       }
-      yield message.err(`删除用户失败：${err.message}`, 3);
+      const error = yield parseError(err);
+      yield message.error(`删除用户失败：${error.message}`, 3);
       return false;
     },
   },
@@ -184,7 +161,7 @@ export default {
       return { ...state, current }
     },
     setUser(state, { payload: user }) {
-      return { ...state, user }
+      return { ...state, current: user }
     },
     setUsers(state, { payload }) {
       return { ...state, ...payload }
