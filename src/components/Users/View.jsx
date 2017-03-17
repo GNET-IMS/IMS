@@ -10,7 +10,7 @@ class View extends Component {
     super(props);
   }
   render() {
-    const { accounts, form, dispatch, type, onSubmit, ...rest } = this.props;
+    const { users, form, dispatch, type, onSubmit, ...rest } = this.props;
     const { getFieldProps, getFieldError, isFieldValidating } = form;
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -84,25 +84,28 @@ class View extends Component {
 
 export default Form.create({
     mapPropsToFields: (props) => {
-        const accounts = props.accounts.accounts[0];
+        const users = props.users.users[0];
         return {
             name: {
-                value: accounts.name,
+                value: users.name,
             },
             is_admin: {
-                value: accounts.is_admin? "是" : "否",            
+                value: users.is_admin? "是" : "否",            
             },
             username: {
-                value: accounts.username,
+                value: users.username,
             },
             password: {
-                value: accounts.password,
+                value: users.password,
             },
             sex: {
-                value: accounts.sex ? "女" : "男",
+                value: users.sex ? "女" : "男",
             },
             email: {
-                value: accounts.email,
+                value: users.email,
+            },
+            birthday: {
+                value: users.birthday,
             }
           }
     }
