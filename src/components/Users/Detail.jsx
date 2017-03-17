@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Row, Col, Input, Button, Select,Switch } from 'antd';
+import { Form, Row, Col, Input, Button, Select,Switch, Radio, DatePicker } from 'antd';
 import { routerRedux } from 'dva/router';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 class Detail extends Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class Detail extends Component {
   }
   render() {
     const { users, form, dispatch, type, onSubmit, ...rest } = this.props;
-    const { getFieldProps, getFieldError, isFieldValidating } = form;
+    const { getFieldProps, getFieldError, isFieldValidating, setFieldsValue } = form;
     const nameProps = getFieldProps('name', {
       rules: [
         { required: true, message: '姓名不得为空' }
@@ -28,7 +30,7 @@ class Detail extends Component {
       ]
     });
     const sexProps = getFieldProps('sex');
-    const birthdayProps = getFieldProps('birthday');
+    //const birthdayProps = getFieldProps('birthday');
     const emailProps = getFieldProps('email');
     const departmentProps = getFieldProps('department', {
       rules: [
@@ -102,7 +104,10 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('sex') ? '校验中...' : (getFieldError('sex') || []).join(', ')}
                 >
-                <Input {...sexProps} />
+                <RadioGroup defaultValue="0" {...sexProps} >
+                  <RadioButton value="0">男</RadioButton>
+                  <RadioButton value="1">女</RadioButton>
+                </RadioGroup>
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -146,7 +151,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('birthday') ? '校验中...' : (getFieldError('birthday') || []).join(', ')}
                 >
-                <Input {...birthdayProps} />
+                  <DatePicker {...getFieldProps('birthday')} size="default" format="yyyy-MM-DD" onChange={(date, dateString) => {
+                      form.setFieldsValue({
+                        ['birthday']: dateString,
+                      })
+                    } } />
+                
+                
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -182,7 +193,8 @@ Detail.defaultProps = {
 export default Form.create({
   mapPropsToFields: (props) => {
       const type = props.type;
-      const users = props.users.users[0];
+      const user = props.users.current;
+      console.log(user);
       if(type=="add"){
           return {
             password: {
@@ -192,17 +204,30 @@ export default Form.create({
       }else{
           return {
             name: {
-                value: users.name,
+                value: user.name,
             },
-            type: {
-                value: users.type,            
+            is_admin: {
+                value: user.is_admin? true : false,            
             },
-            user: {
-                value: users.username,
+            username: {
+                value: user.username,
             },
             password: {
-                value: users.password,
+                value: user.password,
             },
+            sex: {
+                value: user.sex,
+            },
+            email: {
+                value: user.email,
+            },
+            department: {
+                value: user.department,
+            },
+            
+            title: {
+                value: user.title,
+            }
           }
       }
      
