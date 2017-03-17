@@ -19,7 +19,20 @@ const initialState = {
   ],
   submiting: false,
   loadding: false,
-  current: {},
+  current: {
+        "_id": "58c7b1e697b7d7d6968bb7ff",
+        "username": "admin",
+        "password": "1234",
+        "sex": 1,
+        "email": "yedi728@qq.com",
+        "name": "yehq",
+        "birthday": "2018-02-13",
+        "department": "天堂",
+        "title": "前端",
+        "avatar_url": "/assets/imagesh1.jpg",
+        "is_admin": true,
+        "created_at": "2018-02-13"
+  },
 
 }
 export default {
