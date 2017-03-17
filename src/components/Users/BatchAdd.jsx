@@ -12,7 +12,7 @@ class BatchAdd extends Component {
   
   render() {
     const { form, dispatch } = this.props;
-    const { getFieldProps, getFieldError, isFieldValidating } = form;
+    const { getFieldProps, getFieldError, isFieldValidating, getFieldDecorator } = form;
 
     const formItemLayout = {
       wrapperCol: { span: 12 },
@@ -68,11 +68,13 @@ class BatchAdd extends Component {
                 hasFeedback
                 help={isFieldValidating(`name_${i}`) ? '校验中...' : (getFieldError(`name_${i}`) || []).join(', ')}
                 >
-                <Input {...getFieldProps(`name_${i}`, {
+                {getFieldDecorator(`name_${i}`, {
                     rules: [
                       { required: true, message: '姓名不得为空' }
-                    ]
-                  })} />
+                    ],
+                })(
+                  <Input />
+                )}
             </FormItem>
             </Col>
             <Col span={6}>
@@ -81,11 +83,13 @@ class BatchAdd extends Component {
                 hasFeedback
                 help={isFieldValidating(`username_${i}`) ? '校验中...' : (getFieldError(`username_${i}`) || []).join(', ')}
                 >
-                <Input {...getFieldProps(`username_${i}`, {
+                {getFieldDecorator(`username_${i}`, {
                     rules: [
                       { required: true, message: '用户名不得为空' }
-                    ]
-                  })} />
+                    ],
+                })(
+                  <Input />
+                )}
                 </FormItem>
             </Col>
             <Col span={6}>
@@ -94,11 +98,13 @@ class BatchAdd extends Component {
                 hasFeedback
                 help={isFieldValidating(`password_${i}`) ? '校验中...' : (getFieldError(`password_${i}`) || []).join(', ')}
                 >
-                    <Input {...getFieldProps(`password_${i}`, {
+                  {getFieldDecorator(`password_${i}`, {
                     rules: [
                       { required: true, message: '密码不得为空' }
-                    ]
-                  })} />
+                    ],
+                })(
+                  <Input />
+                )}
                 </FormItem>
             </Col>
             <Col span={6}>
@@ -107,11 +113,13 @@ class BatchAdd extends Component {
                 hasFeedback
                 help={isFieldValidating(`department_${i}`) ? '校验中...' : (getFieldError(`department_${i}`) || []).join(', ')}
                 >
-                <Input {...getFieldProps(`department_${i}`, {
+                {getFieldDecorator(`department_${i}`, {
                     rules: [
                       { required: true, message: '部门不得为空' }
-                    ]
-                  })} />
+                    ],
+                })(
+                  <Input />
+                )}
                 </FormItem>  
             </Col>
           </Row>
