@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Detail from './Detail';
 
 const Edit = (props) => {
-  const { dispatch } = props;
+  const { dispatch, users } = props;
   return (
     <Detail
       {...props}
@@ -18,7 +18,9 @@ const Edit = (props) => {
             return;
           }
           
-          const formData = form.getFieldsValue();
+          let formData = form.getFieldsValue();
+          formData._id = users.current._id;
+          if (!formData.password) delete formData.password;
           dispatch({
             type: 'users/edit',
             payload: formData,

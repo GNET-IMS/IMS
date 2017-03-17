@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
 import { Form, Row, Col, Input, Button, Select,Switch, Radio, DatePicker } from 'antd';
 import { routerRedux } from 'dva/router';
 
@@ -13,40 +14,11 @@ class Detail extends Component {
   }
   render() {
     const { users, form, dispatch, type, onSubmit, ...rest } = this.props;
-    const { getFieldProps, getFieldError, isFieldValidating, setFieldsValue } = form;
-    const nameProps = getFieldProps('name', {
-      rules: [
-        { required: true, message: '姓名不得为空' }
-      ]
-    });
-    const userProps = getFieldProps('username', {
-      rules: [
-        { required: true, message: '用户名不得为空' }
-      ]
-    });
-    const passwordProps = getFieldProps('password', {
-      rules: [
-        { required: true, message: '密码不得为空' }
-      ]
-    });
-    const sexProps = getFieldProps('sex');
-    //const birthdayProps = getFieldProps('birthday');
-    const emailProps = getFieldProps('email');
-    const departmentProps = getFieldProps('department', {
-      rules: [
-        { required: true, message: '部门不得为空' }
-      ]
-    });
-    const titleProps = getFieldProps('title');
+    const { getFieldDecorator, getFieldError, isFieldValidating, setFieldsValue } = form;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 10 },
     };
-    const is_adminProps = getFieldProps('is_admin', {
-      rules: [
-        { required: true, message: '是否为管理员必须选择' }
-      ]
-    });
     return (
       <div>
         <Form  layout="horizontal">
@@ -60,7 +32,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('name') ? '校验中...' : (getFieldError('name') || []).join(', ')}
                 >
-                <Input {...nameProps} />
+                {getFieldDecorator('name', {
+                  rules: [
+                    { required: true, message: '姓名不得为空' }
+                  ]
+                })(
+                  <Input />
+                )}
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -70,7 +48,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('is_admin') ? '校验中...' : (getFieldError('is_admin') || []).join(', ')}
                 >
-                <Switch {...is_adminProps} checkedChildren="是" unCheckedChildren="否" />
+                {getFieldDecorator('is_admin', {
+                  rules: [
+                    { required: true, message: '是否为管理员必须选择' }
+                  ]
+                })(
+                  <Switch checkedChildren="是" unCheckedChildren="否" />
+                )}
                 </FormItem>     
             </Col>
           </Row>
@@ -82,7 +66,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('username') ? '校验中...' : (getFieldError('username') || []).join(', ')}
                 >
-                <Input {...userProps} />
+                {getFieldDecorator('username', {
+                  rules: [
+                    { required: true, message: '用户名不得为空' }
+                  ]
+                })(
+                  <Input />
+                )}
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -92,7 +82,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('password') ? '校验中...' : (getFieldError('password') || []).join(', ')}
                 >
-                <Input {...passwordProps} />
+                {getFieldDecorator('password', {
+                  rules: [
+                    { required: this.props.type === 'edit' ? false : true, message: '密码不得为空' }
+                  ]
+                })(
+                  <Input placeholder="输入新密码，保存后可以修改密码"/>
+                )}
                 </FormItem>            
             </Col>
           </Row>
@@ -104,10 +100,17 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('sex') ? '校验中...' : (getFieldError('sex') || []).join(', ')}
                 >
-                <RadioGroup defaultValue="0" {...sexProps} >
-                  <RadioButton value="0">男</RadioButton>
-                  <RadioButton value="1">女</RadioButton>
-                </RadioGroup>
+                {getFieldDecorator('sex', {
+                  initialValie: '0',
+                  rules: [
+                    { required: true, message: '性别不得为空' }
+                  ]
+                })(
+                  <RadioGroup>
+                    <RadioButton value="0">男</RadioButton>
+                    <RadioButton value="1">女</RadioButton>
+                  </RadioGroup>
+                )}
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -117,7 +120,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('email') ? '校验中...' : (getFieldError('email') || []).join(', ')}
                 >
-                <Input {...emailProps} />
+                {getFieldDecorator('email', {
+                  rules: [
+                    { required: true, message: '邮箱不得为空' }
+                  ]
+                })(
+                  <Input/>
+                )}
                 </FormItem>            
             </Col>
           </Row>
@@ -129,7 +138,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('department') ? '校验中...' : (getFieldError('department') || []).join(', ')}
                 >
-                <Input {...departmentProps} />
+                {getFieldDecorator('department', {
+                  rules: [
+                    { required: true, message: '部门不得为空' }
+                  ]
+                })(
+                  <Input/>
+                )}
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -139,7 +154,13 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('title') ? '校验中...' : (getFieldError('title') || []).join(', ')}
                 >
-                <Input {...titleProps} />
+                {getFieldDecorator('title', {
+                  rules: [
+                    { required: false }
+                  ]
+                })(
+                  <Input/>
+                )}
                 </FormItem>            
             </Col>
           </Row>
@@ -151,13 +172,18 @@ class Detail extends Component {
                 hasFeedback
                 help={isFieldValidating('birthday') ? '校验中...' : (getFieldError('birthday') || []).join(', ')}
                 >
-                  <DatePicker {...getFieldProps('birthday')} size="default" format="yyyy-MM-DD" onChange={(date, dateString) => {
+                {getFieldDecorator('birthday', {
+                  initialValie: moment(),
+                  rules: [
+                    { required: false }
+                  ]
+                })(
+                  <DatePicker format="yyyy-MM-DD" onChange={(date, dateString) => {
                       form.setFieldsValue({
-                        ['birthday']: dateString,
+                        ['birthday']: moment(dateString).format('yyyy-MM-DD'),
                       })
-                    } } />
-                
-                
+                  } } />
+                )} 
                 </FormItem>
             </Col>
             <Col span={12}>
@@ -194,11 +220,13 @@ export default Form.create({
   mapPropsToFields: (props) => {
       const type = props.type;
       const user = props.users.current;
-      console.log(user);
       if(type=="add"){
           return {
             password: {
                 value: 1234
+            },
+            is_admin: {
+                value: false,            
             },
           }
       }else{
@@ -207,16 +235,16 @@ export default Form.create({
                 value: user.name,
             },
             is_admin: {
-                value: user.is_admin? true : false,            
+                value: user.is_admin ? true : false,            
             },
             username: {
                 value: user.username,
             },
-            password: {
-                value: user.password,
+            birthday: {
+                value: moment(user.birthday)
             },
             sex: {
-                value: user.sex,
+                value: `${user.sex}`,
             },
             email: {
                 value: user.email,
@@ -224,7 +252,6 @@ export default Form.create({
             department: {
                 value: user.department,
             },
-            
             title: {
                 value: user.title,
             }
