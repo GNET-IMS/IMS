@@ -5,9 +5,7 @@ import selector from '../models/users/selector';
 
 const PersonalPage = ({dispatch}) => {
   return (
-    <div className={styles['container']}>
-
-    </div>
+    <Personal />
   );
 }
 

@@ -1,6 +1,5 @@
 .header {
     height: 50px;
-    background-color: rgb(64, 64, 64);
 }
 
 .header>ul>li {
@@ -14,9 +13,12 @@
 }
 
 .header-right {
-    background-color: rgb(64, 64, 64);
     float: right;
     margin-right: 20px;
+}
+
+.header-left {
+    float: left;
 }
 
 .header .photo {

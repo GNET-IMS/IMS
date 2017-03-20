@@ -17,7 +17,7 @@ class GuideMenu extends React.Component {
     return (
       <div className={styles['guideMenu']}>
         <div className={styles['logo']}>
-            <img src="./images/favicon.ico" alt=""/>
+            haha
         </div>
         <Menu
           theme={this.state.theme}
