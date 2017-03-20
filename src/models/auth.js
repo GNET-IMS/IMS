@@ -15,6 +15,26 @@ export default {
   state: initialState,
 
   effects: {
+    *token({ payload }, { select, call, put }) {
+      const { username, password } = payload;
+      const { data, error } = yield request('/oauth/token', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic dHJ1c3RlZDpzZWNyZXQ=',  // trusted
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `grant_type=password&username=${username}&password=${password}`,
+      });
+
+      if (error) {
+        // TODO send error message to global show
+        return false;
+      }
+
+      yield localStorage.setItem('authentication', true);
+      yield localStorage.setItem('access_token', data.access_token);
+      yield localStorage.setItem('uid', data.uid);
+    }
   },
 
   reducers: {

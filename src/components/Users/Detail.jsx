@@ -178,9 +178,9 @@ class Detail extends Component {
                     { required: false }
                   ]
                 })(
-                  <DatePicker format="yyyy-MM-DD" onChange={(date, dateString) => {
+                  <DatePicker format="YYYY-MM-DD" onChange={(date, dateString) => {
                       form.setFieldsValue({
-                        ['birthday']: moment(dateString).format('yyyy-MM-DD'),
+                        ['birthday']: moment(dateString).format('YYYY-MM-DD'),
                       })
                   } } />
                 )} 
@@ -228,6 +228,9 @@ export default Form.create({
             is_admin: {
                 value: false,            
             },
+            sex: {
+                value: '0',
+            },
           }
       }else{
           return {
@@ -244,7 +247,7 @@ export default Form.create({
                 value: moment(user.birthday)
             },
             sex: {
-                value: `${user.sex}`,
+                value: user.sex ? `${user.sex}` : '0',
             },
             email: {
                 value: user.email,

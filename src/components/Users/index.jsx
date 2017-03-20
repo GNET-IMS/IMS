@@ -102,9 +102,8 @@ const Users = ({dispatch, users, loading}) => {
         pagination={users.pagination} 
         loading={loading} 
         columns={columns} 
-        dataSource={users.users} 
-        rowSelection={{}} 
-        rowKey={record => record._id}
+        dataSource={users.users}  
+        rowKey='username'
         defaultOnChangeCallback={(query) => {
           dispatch({
             type: 'users/search',

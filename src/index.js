@@ -14,6 +14,7 @@ app.use(createLoading({
         global: false,
         models: {
             users: false,
+            auth: false,
         },
     }
 }));
