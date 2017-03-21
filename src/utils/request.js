@@ -46,3 +46,26 @@ export default function request(url, options) {
     .then(data => ({ data }))
     .catch(err => ({ err }));
 }
+
+export function upload(url, formData, onprogress) {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      alert(xhr.responseText);
+    }
+  }
+
+  // const onprogress =  evt => {
+
+  //   var loaded = evt.loaded;
+  //   var tot = evt.total;
+  //   var per = Math.floor(100 * loaded / tot);  //已经上传的百分比  
+  //   var son = document.getElementById('son');
+  //   son.innerHTML = per + "%";
+  //   son.style.width = per + "%";
+  // }
+
+  xhr.upload.onprogress = onprogress;
+  xhr.open("post", getFullUrl(url));  
+  xhr.send(formData); 
+}

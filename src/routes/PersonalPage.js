@@ -1,19 +1,16 @@
 import React from 'react';
 import { connect } from 'dva';
+import Personal from '../components/Personal'
 import styles from './PersonalPage.css';
-import selector from '../models/users/selector';
+import selector from '../models/personal/selector';
 
-const PersonalPage = ({dispatch}) => {
+const PersonalPage = (props) => {
   return (
-    <Personal />
+    <Personal {...props}/>
   );
 }
 
 PersonalPage.propTypes = {
 };
 
-const Personal = connect(selector)(PersonalPage);
-
-export {
-  Personal as default,
-}
+export default connect(selector)(PersonalPage)

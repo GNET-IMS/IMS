@@ -1,0 +1,47 @@
+.avatar-uploader,
+.avatar-uploader-trigger,
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+}
+.avatar-uploader {
+  display: inline-block;
+  border: 1px dashed #d9d9d9;
+  border-radius: 75px;
+  cursor: pointer;
+}
+.avatar-uploader-trigger {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 28px;
+  color: #999;
+}
+.loading {
+    left: 0;
+}
+.progress {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.uploading,
+.failed,
+.successed {
+  font-size: 15px;
+}
+
+.uploading i,
+.failed i,
+.successed i {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.failed {
+  color: red;
+}
+
+.successed {
+  color: green;
+}
