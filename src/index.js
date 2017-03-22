@@ -24,6 +24,7 @@ app.use(createLoading({
 app.model(require('./models/auth'));
 app.model(require('./models/users'));
 app.model(require('./models/personal'));
+app.model(require('./models/message'));
 
 // 4. Router
 app.router(require('./router'));
