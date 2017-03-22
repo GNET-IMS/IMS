@@ -19,6 +19,15 @@
     margin-right: 20px;
 }
 
+.header .message:hover {
+    border-bottom: none;
+}
+.header .message_icon {
+    color:rgb(189, 189, 189);
+}
+.header .message_icon:hover{
+    color: white;
+}
 .header .photo {
     height: 38px;
     width: 38px;
