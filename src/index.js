@@ -15,6 +15,7 @@ app.use(createLoading({
         models: {
             users: false,
             auth: false,
+            personal: false,
         },
     }
 }));
@@ -22,6 +23,7 @@ app.use(createLoading({
 // 3. Model
 app.model(require('./models/auth'));
 app.model(require('./models/users'));
+app.model(require('./models/personal'));
 
 // 4. Router
 app.router(require('./router'));

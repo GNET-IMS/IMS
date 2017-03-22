@@ -7,16 +7,7 @@ import { parseError } from '../../utils/request';
 
 const initialState = {
   query: {},
-  users: [
-    {
-      id: '1',
-      name: 'yehq',
-      username: 'yehq',
-      password: '1234',
-      type: 'github1',
-      createDate: '2016-02-13',
-    },
-  ],
+  users: [],
   pagination: {
     current: 1, 
     total: 100,

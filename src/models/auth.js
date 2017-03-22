@@ -4,9 +4,8 @@ import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 
 const initialState = {
-  userId: '',
+  userId: '58c7b1e697b7d7d6968bb7ff',
   access_token: '123'
-
 }
 export default {
 

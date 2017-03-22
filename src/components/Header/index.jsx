@@ -18,15 +18,27 @@ class Header extends React.Component {
       <div className={styles['header']}>
         <Menu
           onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal"
+          className={styles['header-left']}
+        >
+          <SubMenu key="/message" title={<Icon style={{color:"rgb(189, 189, 189)"}} type="menu-fold" />}>
+          </SubMenu>
+        </Menu>
+
+        <Menu
+          onClick={this.handleClick}
           defaultOpenKeys={['sub1']}
           selectedKeys={[this.state.current]}
           mode="horizontal"
           className={styles['header-right']}
         >
-          <SubMenu key="/message" className={styles['message']} title={<Link to="/message"><Icon className={styles['message_icon']}  type="mail" /></Link>}></SubMenu>
+          <Menu.Item key="/message" style={{borderBottom:"none"}} ><Link to="/message"><Icon style={{fontSize:24, marginTop:15}} type="mail" /></Link></Menu.Item>
           <SubMenu key="/logout" title={<Link to="/personal"><img className={styles['photo']} src="/images/chh1.jpg" alt="暂无头像"/></Link>}>
             <Menu.Item key="/user">用户名</Menu.Item>
-            <Menu.Item key="/owern">个人信息</Menu.Item>
+            <Menu.Item key="/personal">
+                <Link to="/personal">个人信息</Link>
+            </Menu.Item>
             <Menu.Item key="/logout">
                 <Link to="/logout">注销</Link>
             </Menu.Item>
