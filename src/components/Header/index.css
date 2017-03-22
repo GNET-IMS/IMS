@@ -12,6 +12,30 @@
     margin-right: 0;
 }
 
+.header :global(.ant-menu-submenu) {
+    border-bottom: 0;
+}
+
+.header :global(.ant-menu-submenu) i {
+    color: rgb(189, 189, 189);
+}
+
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-item):hover, 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-submenu):hover, 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-item-active), 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-submenu-active), 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-item-open), 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-submenu-open), 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-item-selected), 
+.header :global(.ant-menu-horizontal) > :global(.ant-menu-submenu-selected) {
+    border-bottom: 0;
+    color: #ccc;
+}
+
+.header :global(.ant-menu-submenu-open):hover i {
+    color: #000;
+}
+
 .header-right {
     float: right;
     margin-right: 20px;

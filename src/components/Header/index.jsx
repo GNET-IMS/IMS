@@ -22,7 +22,7 @@ class Header extends React.Component {
           mode="horizontal"
           className={styles['header-left']}
         >
-          <SubMenu key="/message" title={<Icon style={{color:"rgb(189, 189, 189)"}} type="menu-fold" />}>
+          <SubMenu key="/message" title={<Icon type="menu-fold" />}>
           </SubMenu>
         </Menu>
 
@@ -33,7 +33,7 @@ class Header extends React.Component {
           mode="horizontal"
           className={styles['header-right']}
         >
-          <SubMenu key="/message" title={<Link to="/message"><Icon style={{color:"rgb(189, 189, 189)"}} type="mail" /></Link>}></SubMenu>
+          <SubMenu key="/message" title={<Link to="/message"><Icon type="mail" /></Link>}></SubMenu>
           <SubMenu key="/user" title={<Link to="/personal"><img className={styles['photo']} src="/images/chh1.jpg" alt="暂无头像"/></Link>}>
             <Menu.Item key="/user">用户名</Menu.Item>
             <Menu.Item key="/personal">

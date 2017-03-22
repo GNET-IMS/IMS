@@ -17,6 +17,21 @@
     overflow-y: auto;
 }
 
+:global(.ant-menu-dark.ant-menu-inline) :global(.ant-menu-item-selected) {
+    position: static;
+    background: #333;
+}
+
+:global(.ant-menu-dark.ant-menu-inline) :global(.ant-menu-item-selected):after {
+    position: absolute;
+    content: " ";
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #3eabe8;
+}
+
 .menu::-webkit-scrollbar {
     width: 4px;
     height: 16px;
