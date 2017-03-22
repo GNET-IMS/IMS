@@ -33,8 +33,8 @@ class Header extends React.Component {
           mode="horizontal"
           className={styles['header-right']}
         >
-          <SubMenu key="/message" title={<Link to="/message"><Icon style={{color:"rgb(189, 189, 189)"}} type="mail" /></Link>}></SubMenu>
-          <SubMenu key="/user" title={<Link to="/personal"><img className={styles['photo']} src="/images/chh1.jpg" alt="暂无头像"/></Link>}>
+          <Menu.Item key="/message" style={{borderBottom:"none"}} ><Link to="/message"><Icon style={{fontSize:24, marginTop:15}} type="mail" /></Link></Menu.Item>
+          <SubMenu key="/logout" title={<Link to="/personal"><img className={styles['photo']} src="/images/chh1.jpg" alt="暂无头像"/></Link>}>
             <Menu.Item key="/user">用户名</Menu.Item>
             <Menu.Item key="/personal">
                 <Link to="/personal">个人信息</Link>
