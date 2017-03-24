@@ -54,16 +54,16 @@ class LoginPage extends Component {
                         }
 
                         const formData = form.getFieldsValue();
-                        console.log(formData);
                         dispatch({
-                            type: 'login/submit',
+                            type: 'auth/token',
                             payload: {
-                            username: formData.telephone,
-                            password: formData.password,
+                                username: formData.username,
+                                password: formData.password,
                             },
                         })
                         });
                     } }>登录</Button>
+                    <a className={styles['signIn']} href="https://localhost:3000/dialog/authorize?redirect_uri=https://localhost:8000&response_type=code&client_id=admin&scope=offline_accesss">login</a>
                 </FormItem>
             </Form>
         </div>

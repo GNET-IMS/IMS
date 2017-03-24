@@ -3,6 +3,12 @@ import './index.css';
 import { browserHistory } from 'dva/router';
 import createLoading from 'dva-loading';
 
+import router from './router';
+
+import auth from './models/auth';
+import users from './models/users';
+import personal from './models/personal';
+
 // 1. Initialize
 const app = dva({
     history: browserHistory
@@ -21,12 +27,12 @@ app.use(createLoading({
 }));
 
 // 3. Model
-app.model(require('./models/auth'));
-app.model(require('./models/users'));
-app.model(require('./models/personal'));
+app.model(auth);
+app.model(users);
+app.model(personal);
 
 // 4. Router
-app.router(require('./router'));
+app.router(router);
 
 // 5. Start
 app.start('#root');

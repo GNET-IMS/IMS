@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 import UploadModal from './UploadModal';
-import { ROOT_PATH } from '../../constans';
+import { ROOT_PATH } from '../../constants';
 
 import styles from './Feature.css';
 

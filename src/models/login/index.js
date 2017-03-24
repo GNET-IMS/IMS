@@ -1,7 +1,6 @@
 import pathToRegexp from 'path-to-regexp';
 
 const initialState = {
-  loading: false,
   message: undefined,
 }
 
@@ -18,9 +17,6 @@ export default {
           dispatch({
             type: 'clear',
           })
-          dispatch({
-            type: 'user/clear'
-          })
         }
       })
     }
@@ -28,19 +24,11 @@ export default {
 
   effects: {
     *submit({ payload }, { put }) {
-      yield put({ type: 'toggleLoading', payload: true });
-      yield put({ type: 'oauth/token', payload, });
-      yield put({ type: 'toggleLoading', payload: false });
+      
     }
   },
 
   reducers: {
-    toggleLoading(state, { payload }) {
-      return { ...state, loading: payload }
-    },
-    setMessage(state, { payload: message }) {
-      return { ...state, message }
-    },
     clear(state) {
       return initialState
     },

@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-import { ROOT_PATH } from '../constans';
+import { ROOT_PATH } from '../constants';
 
 function parseJSON(response) {
   return response.json();
@@ -16,7 +16,8 @@ function checkStatus(response) {
 }
 
 function getFullUrl(url) {
-  return url.indexOf('/') === 0 ? ROOT_PATH + url : ROOT_PATH + '/' + url
+  const isComplete = url.indexOf('http') === 0;
+  return isComplete ? url : url.indexOf('/') === 0 ? ROOT_PATH + url : ROOT_PATH + '/' + url;
 }
 
 export function parseError(error) {
@@ -40,6 +41,7 @@ export function parseError(error) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  console.log(getFullUrl(url))
   return fetch(getFullUrl(url), options)
     .then(checkStatus)
     .then(parseJSON)

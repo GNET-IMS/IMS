@@ -1,9 +1,10 @@
+import React, { Component } from 'react';
 import { Menu, Icon, Switch } from 'antd';
 import { Link } from 'dva/router';
 const SubMenu = Menu.SubMenu;
 import styles from './index.css';
 
-class GuideMenu extends React.Component {
+class GuideMenu extends Component {
   state = {
     theme: 'dark',
     current: 'account',

@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import styles from './IndexPage.css';
 
 import Layout from '../components/Layout';
 
-const IndexPage = ({children, routes, params}) => {
-  return (
-    <div className={styles['container']}>
-      <Layout routes={routes} params={params}>{children}</Layout>
-    </div>
-  );
+class IndexPage extends Component {
+
+  componentWillMount() {
+    const { auth } = this.props;
+  }
+
+  render() {
+    const { children, routes, params } = this.props;
+    return (
+      <div className={styles['container']}>
+        <Layout routes={routes} params={params}>{children}</Layout>
+      </div>
+    );
+  }
 }
 
 IndexPage.propTypes = {
 };
 
-export default connect()(IndexPage);
+export default connect((state) => {
+  return { 
+    auth: state.auth
+  }
+})(IndexPage);

@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import { Breadcrumb } from 'antd';
 import { Link } from 'dva/router';
 import GuideMenu from '../GuideMenu';
