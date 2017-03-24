@@ -6,6 +6,7 @@ import LoginPage from './routes/LoginPage';
 import HomePage from './routes/HomePage';
 import PersonalPage from './routes/PersonalPage';
 import UsersPage, { UserEdit, UserView, UserAdd, UserBatchAdd } from './routes/UsersPage';
+import MessagePage from './routes/MessagePage';
 
 function RouterConfig({ history }) {
   return (
@@ -14,6 +15,7 @@ function RouterConfig({ history }) {
         <Route path="login" component={LoginPage} />
         <Route component={IndexPage}>
           <IndexRoute component={HomePage} />
+          <Route path="message" breadcrumbName="消息" component={ MessagePage } />
           <Route path="user" breadcrumbName="用户">
             <Route path="list" breadcrumbName="列表">
               <IndexRoute component={UsersPage} />

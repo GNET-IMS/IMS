@@ -8,6 +8,7 @@ import router from './router';
 import auth from './models/auth';
 import users from './models/users';
 import personal from './models/personal';
+import message from './models/message';
 
 // 1. Initialize
 const app = dva({
@@ -30,6 +31,7 @@ app.use(createLoading({
 app.model(auth);
 app.model(users);
 app.model(personal);
+app.model(message);
 
 // 4. Router
 app.router(router);
