@@ -8,7 +8,11 @@ import Layout from '../components/Layout';
 class IndexPage extends Component {
 
   componentWillMount() {
-    const { auth } = this.props;
+    const { auth, dispatch } = this.props;
+    if (1) {
+      dispatch(routerRedux.replace('/login'))
+      return false;
+    } 
   }
 
   render() {

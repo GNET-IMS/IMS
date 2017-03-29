@@ -2,14 +2,14 @@ var path = require('path')
 var webpack = require('webpack')
 
 
-var projectRootPath = path.resolve(__dirname,'.')
+var projectRootPath = path.resolve(__dirname,'..')
 
 var config = {
   entry: [
-    path.resolve(projectRootPath,'src/index.js')
+    path.resolve(projectRootPath,'client/index.js')
   ],
   output:{
-    path: path.resolve(projectRootPath,'public'),
+    path: path.resolve(projectRootPath,'dist'),
     filename: 'bundle.js',
     // publicPath: '/public/'
   },
@@ -29,13 +29,13 @@ var config = {
       },
       { 
         test: /\.css$/, 
-        include: path.resolve(projectRootPath,'src'),
+        include: path.resolve(projectRootPath,'client'),
         loader: "style-loader!css-loader?importLoaders=1&modules&localIdentName=[local]--[hash:base64:5]" 
       },
       { 
         test: /\.css$/, 
         loader: 'style-loader!css-loader',
-        exclude: path.resolve(projectRootPath,'src'),
+        exclude: path.resolve(projectRootPath,'client'),
       },
       { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
     ]
@@ -44,19 +44,12 @@ var config = {
   resolve: {
       //查找module的话从这里开始查找
       // root: 'E:/github/flux-example/src', //绝对路径
-      //自动扩展文件后缀名，意味着我们require模块可以省略不写后缀名
       extensions: ['', '.js', '.jsx', '.json'],
-      //模块别名定义，方便后续直接引用别名，无须多写长长的地址
-      alias: {
-          AppStore : 'js/stores/AppStores.js',//后续直接 require('AppStore') 即可
-          ActionType : 'js/actions/ActionType.js',
-          AppAction : 'js/actions/AppAction.js'
-      }
   },
   plugins:[
     new webpack.DefinePlugin({
       "process.env":{
-        NODE_ENV:JSON.stringify(process.env.NODE_ENV)
+			NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
      })
   ]

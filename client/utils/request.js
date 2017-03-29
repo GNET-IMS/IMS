@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import { routerRedux } from 'dva/router';
 import { ROOT_PATH } from '../constants';
 
 function parseJSON(response) {
@@ -10,7 +11,7 @@ function checkStatus(response) {
     return response;
   }
 
-  const error = new Error(response.statusText);
+  let error = new Error(response.statusText);
   error.response = response;
   throw error;
 }
@@ -41,8 +42,10 @@ export function parseError(error) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  console.log(getFullUrl(url))
-  return fetch(getFullUrl(url), options)
+  return fetch(url, {
+    credentials: 'include',
+    ...options,
+  })
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ({ data }))

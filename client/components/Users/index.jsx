@@ -82,9 +82,7 @@ const Users = ({dispatch, users, loading}) => {
             dispatch({
               type: 'users/search',
               payload: {
-                filters: {
-                  [selectValue]: textValue
-                }
+                [selectValue]: textValue
               }
             })
           }}

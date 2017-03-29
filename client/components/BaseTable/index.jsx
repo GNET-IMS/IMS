@@ -7,22 +7,24 @@ class BaseTable extends Component {
   static defaultProps = {
     defaultOnChangeCallback: () => {}
   }
-  render() {
-    const { pagination, defaultOnChangeCallback, onChange, ...others, } = this.props;
-    const onTableChange = (pagination, filters, sorter) => {
-      let query = {}
-      query.pagination = {
-        current: pagination.current,
-        pageSize: pagination.pageSize,
-      }
+
+  onTableChange = (pagination, filters, sorter) => {
+    const { onChange, defaultOnChangeCallback } = this.props;
+    let query = {}
+      query.current = pagination.current;
+      query.pageSize = pagination.pageSize;
       if (sorter.order) {
         const order = sorter.order;
-        query.sorter = {
-          [sorter.field]: order.substr(0, order.length - 3)
-        }
+        query.sorter = sorter.field;
+        query.order = order.substr(0, order.length - 3);
       }
       defaultOnChangeCallback(query);
-    }
+      if (onChange && 'function' === typeof onChange) onChange();
+  }
+
+  render() {
+    const { pagination, ...others, } = this.props;
+
     return (
       <div>
         <Table
@@ -34,7 +36,7 @@ class BaseTable extends Component {
             showQuickJumper: true,
             ...pagination
           }}
-          onChange={onChange || onTableChange}
+          onChange={this.onTableChange}
         />
       </div>
 
