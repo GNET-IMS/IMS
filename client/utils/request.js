@@ -23,7 +23,21 @@ function getFullUrl(url) {
 
 export function parseError(error) {
   try {
-    return error.response.json();
+    if (error.response.status === 401) {
+      setTimeout(() => {
+        location.replace('/authorize');
+      }, 2000);
+      return error.response.text()
+        .then(message => {
+          return {
+            message: `${message}, 登录授权过期，2秒后自动跳转至登录页`,
+            timestamp: new Date().getTime(),
+            status: 401
+          }
+        })
+    } else {
+      return error.response.json()
+    }
   } catch (err) {
     return Promise.resolve({
       timestamp: new Date().getTime(),
@@ -50,27 +64,4 @@ export default function request(url, options) {
     .then(parseJSON)
     .then(data => ({ data }))
     .catch(err => ({ err }));
-}
-
-export function upload(url, formData, onprogress) {
-  let xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      alert(xhr.responseText);
-    }
-  }
-
-  // const onprogress =  evt => {
-
-  //   var loaded = evt.loaded;
-  //   var tot = evt.total;
-  //   var per = Math.floor(100 * loaded / tot);  //已经上传的百分比  
-  //   var son = document.getElementById('son');
-  //   son.innerHTML = per + "%";
-  //   son.style.width = per + "%";
-  // }
-
-  xhr.upload.onprogress = onprogress;
-  xhr.open("post", getFullUrl(url));  
-  xhr.send(formData); 
 }

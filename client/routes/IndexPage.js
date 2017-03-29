@@ -6,15 +6,6 @@ import styles from './IndexPage.css';
 import Layout from '../components/Layout';
 
 class IndexPage extends Component {
-
-  componentWillMount() {
-    const { auth, dispatch } = this.props;
-    if (1) {
-      dispatch(routerRedux.replace('/login'))
-      return false;
-    } 
-  }
-
   render() {
     const { children, routes, params } = this.props;
     return (

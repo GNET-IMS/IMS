@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import {create, view, remove, search, update} from '../../services/users';
+import { create, view, remove, search, update } from '../../services/users';
 import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import { parseError } from '../../utils/request';
@@ -9,7 +9,7 @@ const initialState = {
   query: {},
   users: [],
   pagination: {
-    current: 1, 
+    current: 1,
     total: 100,
     pageSize: 10,
   },
@@ -42,7 +42,7 @@ export default {
           dispatch({ type: 'clear' })
         }
       })
-    }, 
+    },
     editSubscriptions({ dispatch, history }) {
       history.listen((location, state) => {
         if (pathToRegexp('/user/list/:action/:id').test(location.pathname)) {
@@ -59,11 +59,11 @@ export default {
 
   effects: {
     *search({ payload }, { put, select }) {
-      const { access_token } = yield select( state => {
+      const { access_token } = yield select(state => {
         return {
           'access_token': state.auth.access_token,
         }
-      } );
+      });
       const { data, err } = yield search(access_token, payload);
       if (!err) {
         yield put({
@@ -81,11 +81,11 @@ export default {
       return false;
     },
     *view({ payload: id }, { put, select }) {
-      const { access_token } = yield select( state => {
+      const { access_token } = yield select(state => {
         return {
           'access_token': state.auth.access_token,
         }
-      } );
+      });
       const { data, err } = yield view(access_token, id);
       if (!err) {
         yield put({
@@ -100,36 +100,36 @@ export default {
       return false;
     },
     *add({ payload }, { put, call, select }) {
-      const access_token = yield select( state => state.auth.access_token );
+      const access_token = yield select(state => state.auth.access_token);
       const { data, err } = yield create(access_token, payload);
       if (!err) {
-    	  yield message.success('添加成功', 2);
+        yield message.success('添加成功', 2);
         yield put(routerRedux.goBack());
       } else {
         const error = yield parseError(err);
         yield message.error(`添加失败：${error.message}`, 3);
       }
     },
-    *edit({ payload }, { put, call, select }) {   
-      const access_token = yield select( state => state.auth.access_token );
+    *edit({ payload }, { put, call, select }) {
+      const access_token = yield select(state => state.auth.access_token);
       const { data, err } = yield update(access_token, payload);
       if (!err) {
-    	  yield message.success('修改成功', 2);
+        yield message.success('修改成功', 2);
         yield put(routerRedux.goBack());
       } else {
         const error = yield parseError(err);
         yield message.error(`修改失败：${error.message}`, 3);
       }
-      
+
     },
     *delete({ payload: id }, { put, select }) {
-	    const { access_token } = yield select( state => {
+      const { access_token } = yield select(state => {
         return {
-  	      access_token: state.auth.access_token,
+          access_token: state.auth.access_token,
         }
-      } );
+      });
       const { data, err } = yield remove(access_token, id);
-      
+
       if (!err) {
         yield message.success('成功删除用户', 2);
         yield put({ type: 'search' })
