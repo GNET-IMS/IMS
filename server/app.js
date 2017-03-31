@@ -12,9 +12,13 @@ import cookie from 'cookie';
 
 const app = express()
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views/dev'));
+app.set('view engine', 'html');
 app.engine('.html', ejs.renderFile);
+
+//静态文件服务
+app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../dist/client')))
 
 const options = {
   // This is for the proxy
@@ -27,20 +31,7 @@ const options = {
   cert: fs.readFileSync(path.join(__dirname, 'certs/certificate.pem')),
 };
 
-app.get('/code', exchangeAccessToken);
-
-//权限判断
-app.use('*', (req, res, next) => {
-  const cookies = cookie.parse(req.headers.cookie);
-  const { access_token } = cookies;
-  if (access_token) {
-    next()
-  } else {
-    res.redirect('/authorize');
-  }
-})
-
-//webpack中间件配置，包括hotReplace
+// webpack中间件配置，包括hotReplace
 if (!appConfig.isProduction) {
   const wpConfig = require('../build/webpack.dev.js');
   const compiler = webpack(wpConfig)
@@ -56,12 +47,25 @@ if (!appConfig.isProduction) {
   app.use(webpackHotMiddleware(compiler))
 }
 
-//静态文件服务
-app.use(express.static(path.join(__dirname, '../public')))
+app.get('/code', exchangeAccessToken);
 
+//权限判断
+app.use('*', (req, res, next) => {
+  if ('undefined' === typeof req.headers.cookie) {
+    res.redirect('/authorize');
+    return false;
+  }
+  const cookies = cookie.parse(req.headers.cookie);
+  const { access_token } = cookies;
+  if (access_token) {
+    next()
+  } else {
+    res.redirect('/authorize');
+  }
+})
 
 //set routes
-app.use('/', routes);
+//app.use('/', routes);
 
 /**
  * The HTTPS Authorization Server
@@ -103,7 +107,7 @@ const localServer = httpProxy.createProxyServer({
  * 
  */
 https.createServer(options, (req, res) => {
-  if (req.url.startsWith('/oauth/token') || req.url.startsWith('/login') || req.url.startsWith('/authorize') || req.url.startsWith('/dialog') || req.url.startsWith('/javascripts') || req.url.startsWith('/stylesheets')) {
+  if (req.url.startsWith('/oauth/token') || req.url.startsWith('/authorize') || req.url.startsWith('/login') || req.url.startsWith('/dialog') || req.url.startsWith('/javascripts') || req.url.startsWith('/stylesheets')) {
     if (req.url === '/authorize') {
       req.url = `/dialog/authorize?redirect_uri=https://localhost:5000/code&response_type=code&client_id=admin&scope=offline_access`
     };

@@ -25,7 +25,7 @@ export function parseError(error) {
   try {
     if (error.response.status === 401) {
       setTimeout(() => {
-        location.replace('/authorize');
+        location.replace('/loginpage');
       }, 2000);
       return error.response.text()
         .then(message => {
