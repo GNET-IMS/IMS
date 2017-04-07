@@ -79,7 +79,7 @@ const authServer = httpProxy.createProxyServer({
  * The HTTPS Resource Server
  */
 const resourceServer = httpProxy.createProxyServer({
-  target: 'http://localhost:3333',
+  target: 'http://localhost:7001',
   secure: false,
 });
 

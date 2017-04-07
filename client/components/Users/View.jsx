@@ -103,31 +103,31 @@ class View extends Component {
 
 export default Form.create({
     mapPropsToFields: (props) => {
-        const users = props.users.users[0];
+        const current = props.users.current;
         return {
             name: {
-                value: users.name,
+                value: current.name,
             },
             is_admin: {
-                value: users.is_admin? "是" : "否",            
+                value: current.is_admin? "是" : "否",            
             },
             username: {
-                value: users.username,
+                value: current.username,
             },
             password: {
-                value: users.password,
+                value: current.password,
             },
             sex: {
-                value: users.sex ? "女" : "男",
+                value: current.sex ? "女" : "男",
             },
             email: {
-                value: users.email || '暂无',
+                value: current.email || '暂无',
             },
             birthday: {
-                value: moment(users.birthday).format('YYYY-MM-DD') || '暂无',
+                value: moment(current.birthday).format('YYYY-MM-DD') || '暂无',
             },
             title: {
-                value: users.title || '暂无',
+                value: current.title || '暂无',
             }
           }
     }

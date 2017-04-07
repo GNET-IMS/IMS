@@ -10,7 +10,6 @@ const initialState = {
   users: [],
   pagination: {
     current: 1,
-    total: 100,
     pageSize: 10,
   },
   submiting: false,
@@ -69,8 +68,8 @@ export default {
         yield put({
           type: 'setUsers',
           payload: {
-            users: data.data && data.data.users,
-            pagination: data.data && data.data.pagination
+            users: data.users,
+            pagination: data.pagination
           },
         });
 
@@ -90,7 +89,7 @@ export default {
       if (!err) {
         yield put({
           type: 'setUser',
-          payload: data.data && data.data.user,
+          payload: data.user,
         });
         return true;
       }

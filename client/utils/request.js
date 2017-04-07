@@ -35,6 +35,15 @@ export function parseError(error) {
             status: 401
           }
         })
+    } else if (error.response.status === 422) {
+      return error.response.text()
+        .then(message => {
+          return {
+            message: `数据格式错误！, {message}`,
+            timestamp: new Date().getTime(),
+            status: 422
+          }
+        })
     } else {
       return error.response.json()
     }
