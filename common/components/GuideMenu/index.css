@@ -1,0 +1,49 @@
+.guideMenu {
+    width: 15%;
+    height: 100%;
+}
+
+.logo {
+    height: 50px;
+    background: #3eabe8;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    font-size: 20px;
+    line-height: 50px;
+    color: #fff;
+}
+.menu {
+    height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+:global(.ant-menu-dark.ant-menu-inline) :global(.ant-menu-item-selected) {
+    background: #333;
+}
+
+:global(.ant-menu-dark.ant-menu-inline) :global(.ant-menu-item-selected):after {
+    position: absolute;
+    content: " ";
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #3eabe8;
+}
+
+.menu::-webkit-scrollbar {
+    width: 4px;
+    height: 16px;
+    background-color: #222;
+}
+
+.menu::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #222;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    height: 20px;
+    border-radius: 2px;
+    background-color: #555;
+}
