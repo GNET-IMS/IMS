@@ -9,15 +9,15 @@ const Edit = (props) => {
       {...props}
 
       type="edit"
-      
-      onSubmit={ (e, form) => {
+
+      onSubmit={(e, form) => {
         e.preventDefault();
-        
+
         form.validateFieldsAndScroll((errors, values) => {
           if (!!errors) {
             return;
           }
-          
+
           let formData = form.getFieldsValue();
           formData._id = users.current._id;
           if (!formData.password) delete formData.password;
@@ -25,10 +25,10 @@ const Edit = (props) => {
             type: 'users/edit',
             payload: formData,
           })
-		  
-		});
 
-      } }
+        });
+
+      }}
     />
   )
 }

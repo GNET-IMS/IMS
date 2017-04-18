@@ -60,6 +60,10 @@ const authServer = httpProxy.createProxyServer({
   secure: false,
 });
 
+authServer.on('error', function(e) {
+  console.log(e.message)
+});
+
 /**
  * The HTTPS Resource Server
  */
@@ -68,12 +72,20 @@ const resourceServer = httpProxy.createProxyServer({
   secure: false,
 });
 
+resourceServer.on('error', function(e) {
+  console.log(e.message)
+});
+
 /**
  * The local HTTP Resource Server
  */
 const localServer = httpProxy.createProxyServer({
   target: 'http://localhost:8080',
   secure: false,
+});
+
+localServer.on('error', function(e) {
+  console.log(e.message)
 });
 
 /**
@@ -97,7 +109,7 @@ https.createServer(options, (req, res) => {
       req.url = `/dialog/authorize?redirect_uri=http://localhost:8080/code&response_type=code&client_id=admin&scope=offline_access`
     };
     authServer.web(req, res);
-  } else if (req.url.startsWith('/api')) {
+  } else if (req.url.startsWith('/api') || req.url.startsWith('/public') || req.url.startsWith('/socket.io')) {
     const cookies = cookie.parse(req.headers.cookie);
     const { access_token } = cookies;
     req.headers.authorization = `Bearer ${access_token}`;

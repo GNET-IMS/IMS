@@ -45,7 +45,7 @@ export function parseError(error) {
           }
         })
     } else {
-      return error.response.json()
+      return error.response.json().then(result => result.error);
     }
   } catch (err) {
     return Promise.resolve({

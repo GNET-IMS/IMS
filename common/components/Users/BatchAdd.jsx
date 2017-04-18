@@ -44,9 +44,6 @@ class BatchAdd extends Component {
         if (!!errors) {
           return;
         }
-
-
-
         dispatch({
           type: 'users/add',
           payload: target,

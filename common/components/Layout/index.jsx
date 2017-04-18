@@ -14,12 +14,12 @@ class Layout extends React.Component {
   	return last ? <span key={route.path}>{route.breadcrumbName}</span> : <Link key={route.path} to={`/${paths.join('/')}`}>{route.breadcrumbName}</Link>;
 	}
   render() {
-    const { children, routes, params } = this.props;
+    const { children, routes, params, userId } = this.props;
     return (
       <div className={styles['layout']}>
         <GuideMenu></GuideMenu>
         <div className={styles['layout-right']}>
-            <Header />
+            <Header userId={userId}/>
             <div className={styles['layout-main']}>
               <div className={styles['layout-breadcrumb']}>
                 <Breadcrumb separator=">" routes={routes.filter(item => !!item.path)} params={params} itemRender={this.itemRender}/>

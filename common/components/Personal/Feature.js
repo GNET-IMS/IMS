@@ -21,14 +21,14 @@ class Feature extends Component {
             <Col span={8}>
                 <div className={styles['photo']} 
                   onClick={() => this.setState({showUploadModal: !showUploadModal})}>
-                  <img src={photo ? `${ROOT_PATH}${photo}` : '/images/chh1.jpg'} alt=""/>
+                  <img src={photo ? `${photo}` : '/public/images/chh1.jpg'} alt=""/>
                 </div>
                 <UploadModal 
                   show={showUploadModal}
                   onCancel={() => this.setState({showUploadModal: false})}
-                  uploadUrl={`${ROOT_PATH}/api/users/${userId}/upload`}
+                  uploadUrl={`/api/users/${userId}/upload`}
                   uploadResponse={result => {
-                    this.setState({photo: result.data.photo});
+                    this.setState({photo: result.user.avatar_url});
                   }}
                 />
             </Col>

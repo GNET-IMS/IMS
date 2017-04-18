@@ -1,0 +1,15 @@
+.container {
+    display: inline-block;
+    cursor: pointer;
+}
+.container i {
+    cursor: pointer;
+}
+
+.container i:hover {
+    color: #a7a7a7;
+}
+
+.container i:active {
+    color: #696969;
+}

@@ -1,5 +1,4 @@
 .content{
-    width: 800px;
     text-overflow: -o-ellipsis-lastline;
     overflow: hidden;
     text-overflow: ellipsis;

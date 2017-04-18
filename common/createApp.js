@@ -4,17 +4,13 @@ import { RouterContext } from 'dva/router';
 import router from './router';
 import createLoading from 'dva-loading';
 
-import user from './models/user';
-
-
 import auth from './models/auth';
 import users from './models/users';
 import personal from './models/personal';
-import message from './models/message';
+import messages from './models/messages';
 
 export default function createApp(opts, isServer) {
   const app = dva(opts);
-  app.model(user);
     // 2. Plugins
   app.use(createLoading({
       loading: {
@@ -23,6 +19,7 @@ export default function createApp(opts, isServer) {
               users: false,
               auth: false,
               personal: false,
+              messages: false,
           },
       }
   }));
@@ -31,7 +28,7 @@ export default function createApp(opts, isServer) {
   app.model(auth);
   app.model(users);
   app.model(personal);
-  app.model(message);
+  app.model(messages);
 
   if (isServer) {
     app.router(({ history, renderProps}) => {

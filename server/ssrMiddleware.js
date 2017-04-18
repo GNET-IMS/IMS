@@ -1,6 +1,5 @@
 import { match, RoutingContext, createMemoryHistory } from 'dva/router';
 import { renderToString } from 'react-dom/server'
-import { fetchList } from '../common/services/user';
 import { routes } from '../common/router';
 import createApp from '../common/createApp';
 
@@ -24,22 +23,22 @@ export default function (req, res) {
           let html = renderToString(app.start()({ renderProps }));
           res.end(renderFullPage(html, initialState));
           break;
-        case '/index':
-          fetchList()
-            .then(({ err, data }) => {
-              if (err) {
-                res.status(500).end(`Uncaught error: ${err}`);
-                return;
-              }
-              const initialState = { user: data };
-              const app = createApp({
-                history: createMemoryHistory(),
-                initialState,
-              }, /* isServer */true);
-              const html = renderToString(app.start()({ renderProps }));
-              res.end(renderFullPage(html, initialState));
-            });
-          break;
+        // case '/index':
+        //   fetchList()
+        //     .then(({ err, data }) => {
+        //       if (err) {
+        //         res.status(500).end(`Uncaught error: ${err}`);
+        //         return;
+        //       }
+        //       const initialState = { user: data };
+        //       const app = createApp({
+        //         history: createMemoryHistory(),
+        //         initialState,
+        //       }, /* isServer */true);
+        //       const html = renderToString(app.start()({ renderProps }));
+        //       res.end(renderFullPage(html, initialState));
+        //     });
+        //   break;
         case '/authorize':
           initialState = {};
           app = createApp({
