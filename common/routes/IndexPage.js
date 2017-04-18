@@ -7,10 +7,10 @@ import Layout from '../components/Layout';
 
 class IndexPage extends Component {
   render() {
-    const { children, routes, params } = this.props;
+    const { children, routes, params, auth } = this.props;
     return (
       <div className={styles['container']}>
-        <Layout routes={routes} params={params}>{children}</Layout>
+        <Layout routes={routes} params={params} userId={auth.userId}>{children}</Layout>
       </div>
     );
   }

@@ -99,8 +99,13 @@ export default {
       return false;
     },
     *add({ payload }, { put, call, select }) {
-      const access_token = yield select(state => state.auth.access_token);
-      const { data, err } = yield create(access_token, payload);
+      const { access_token, userId } = yield select(state => {
+        return {
+          access_token: state.auth.access_token,
+          userId: state.auth.userId
+        }
+      });
+      const { data, err } = yield create(access_token, { target: payload, creator: userId });
       if (!err) {
         yield message.success('添加成功', 2);
         yield put(routerRedux.goBack());
@@ -128,7 +133,6 @@ export default {
         }
       });
       const { data, err } = yield remove(access_token, id);
-
       if (!err) {
         yield message.success('成功删除用户', 2);
         yield put({ type: 'search' })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Form, Row, Col, Input, Button, Select, Switch, Radio, DatePicker } from 'antd';
+import pinyin from 'pinyin';
 import { routerRedux } from 'dva/router';
 
 const FormItem = Form.Item;
@@ -38,7 +39,17 @@ class Detail extends Component {
                     { required: true, message: '姓名不得为空' }
                   ]
                 })(
-                  <Input />
+                  <Input onBlur={(e) => {
+                    const value = e.target.value;
+                    const pinyinArray = pinyin(value, {
+                      style: pinyin.STYLE_NORMAL,
+                    })
+                    let pinyinStr = '';
+                    for (let array of pinyinArray) {
+                      pinyinStr += array[0];
+                    }
+                    setFieldsValue({ username: pinyinStr })
+                  }} />
                   )}
               </FormItem>
             </Col>
