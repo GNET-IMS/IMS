@@ -32,7 +32,7 @@ const Content = ({ form, message, dispatch, ...rest }) => {
                 form.resetFields();
             }}
             footer={[
-                <div className={styles['footer']} key={}>{current.created_at}</div>,
+                <div className={styles['footer']} key='time'>{current.created_at}</div>,
                 <Button key="submit" type="primary" size="large" onClick={onOk}>
                     确定
                 </Button>
