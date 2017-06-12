@@ -12,8 +12,8 @@ const Users = ({dispatch, users, loading}) => {
   const columns = [
     {
       title: '序号',
-      dataIndex: '_id',
-      key: '_id',
+      dataIndex: 'id',
+      key: 'id',
       render: (text, record, index) => index + 1
     },
     {
@@ -48,7 +48,7 @@ const Users = ({dispatch, users, loading}) => {
     },
     {
       title: '操作',
-      dataIndex: '_id',
+      dataIndex: 'id',
       key: 'operation',
       render: (text, record, index) => (
         <span>
@@ -58,7 +58,7 @@ const Users = ({dispatch, users, loading}) => {
                          
             dispatch({
               type: 'users/delete',
-              payload: record._id,
+              payload: record.id,
             })
 
           } } onCancel={() => {} }>

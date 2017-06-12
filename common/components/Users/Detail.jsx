@@ -185,7 +185,6 @@ class Detail extends Component {
                 help={isFieldValidating('birthday') ? '校验中...' : (getFieldError('birthday') || []).join(', ')}
               >
                 {getFieldDecorator('birthday', {
-                  initialValie: moment(),
                   rules: [
                     { required: false }
                   ]
@@ -253,7 +252,7 @@ export default Form.create({
           value: user.username,
         },
         birthday: {
-          value: moment(user.birthday)
+          value: user.birthday ? moment(user.birthday) : undefined
         },
         sex: {
           value: user.sex ? +`${user.sex}` : 0,
@@ -265,7 +264,7 @@ export default Form.create({
           value: user.department,
         },
         title: {
-          value: user.title,
+          value: user.title || undefined,
         }
       }
     }

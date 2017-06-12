@@ -1,7 +1,7 @@
 export default state => {
     return {
         personal: state.personal,
-        userId: state.auth.userId,
+        user: state.auth.user,
         loading: state.loading.models.personal,
     }
 }

@@ -25,7 +25,7 @@ class LoginPage extends Component {
                 </FormItem>
                 <FormItem>
                     <Button>
-                        <a className={styles['signIn']} href="https://localhost:5000/dialog/authorize">登录授权</a>
+                        <a className={styles['signIn']} href="https://localhost:5000/login/oauth/authorize">登录授权</a>
                     </Button>
                 </FormItem>
             </Form>

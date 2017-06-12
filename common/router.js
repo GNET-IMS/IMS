@@ -1,7 +1,5 @@
 import React from 'react';
 import { Router, Route, IndexRoute } from 'dva/router';
-import App from './routes/App';
-import About from './routes/About';
 
 
 import IndexPage from './routes/IndexPage';
@@ -11,6 +9,8 @@ import HomePage from './routes/HomePage';
 import PersonalPage from './routes/PersonalPage';
 import UsersPage, { UserEdit, UserView, UserAdd, UserBatchAdd } from './routes/UsersPage';
 import MessagePage from './routes/MessagePage';
+import AnnouncementPage from './routes/AnnouncementPage';
+import ChatPage from './routes/ChatPage';
 
 
 export const routes = (
@@ -20,6 +20,8 @@ export const routes = (
       <Route component={IndexPage}>
         <IndexRoute component={HomePage} />
         <Route path="message" breadcrumbName="消息" component={MessagePage} />
+        <Route path="announcement" breadcrumbName="公告" component={AnnouncementPage} />
+        <Route path="chat" breadcrumbName="私信" component={ChatPage} />
         <Route path="user" breadcrumbName="用户">
           <Route path="list" breadcrumbName="列表">
             <IndexRoute component={UsersPage} />

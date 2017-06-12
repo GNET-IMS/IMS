@@ -24,8 +24,8 @@ class Personal extends Component {
   }
 
   render() {
-    const { dispatch, personal, loading } = this.props;
-    const { user, disabled } = personal;
+    const { dispatch, personal, loading, user } = this.props;
+    const { disabled } = personal;
     return (
       <div>
         <Feature {...this.props}></Feature>

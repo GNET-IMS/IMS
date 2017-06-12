@@ -1,52 +1,61 @@
 import request from '../utils/request';
 import querystring from 'querystring';
 
-export async function search(access_token, payload = {}) {
+export async function search(payload = {}) {
   return request(`/api/users?${querystring.stringify(payload)}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${access_token}`,
       'Content-Type': 'application/json',
     },
   })
 }
 
-export async function view(access_token, id) {
+export async function view(id) {
   return request(`/api/users/${id}`, {
     method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${access_token}`,
-    },
-  })
+  });
 }
 
-export async function create(access_token, user) {
+export async function getCurrentUser() {
+  return request(`/api/user`, {
+    method: 'GET',
+  });
+}
+
+export async function create(user) {
   return request(`/api/users`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${access_token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user)
   })
 }
 
-export async function update(access_token, user) {
-  return request(`/api/users/${user._id}`, {
+export async function update(user) {
+  return request(`/api/users/${user.id}`, {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${access_token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user)
   })
 }
 
-export async function remove(access_token, id) {
+export async function remove(id) {
   return request(`/api/users/${id}`, {
     method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${access_token}`,
-    }
+  })
+}
+
+export async function getAnnouncements(id) {
+  return request(`/api/users/${id}/announcements`, {
+    method: 'GET',
+  })
+}
+
+export async function pullAnnouncements(id) {
+  return request(`/api/user/${id}/announcements`, {
+    method: 'POST'
   })
 }

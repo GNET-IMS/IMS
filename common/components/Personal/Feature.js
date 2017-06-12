@@ -13,7 +13,7 @@ class Feature extends Component {
   }
 
   render() {
-    const { personal, dispatch, userId } = this.props;
+    const { personal, dispatch, user } = this.props;
     const { showUploadModal, photo } = this.state;
     return (
       <div>
@@ -21,14 +21,16 @@ class Feature extends Component {
             <Col span={8}>
                 <div className={styles['photo']} 
                   onClick={() => this.setState({showUploadModal: !showUploadModal})}>
-                  <img src={photo ? `${photo}` : '/public/images/chh1.jpg'} alt=""/>
+                  <img src={user.avatar_url} alt=""/>
                 </div>
                 <UploadModal 
                   show={showUploadModal}
                   onCancel={() => this.setState({showUploadModal: false})}
-                  uploadUrl={`/api/users/${userId}/upload`}
+                  uploadUrl={`/api/users/${user.id}/upload`}
                   uploadResponse={result => {
-                    this.setState({photo: result.user.avatar_url});
+                    dispatch({
+                      type: 'auth/getCurrentUser'
+                    })
                   }}
                 />
             </Col>

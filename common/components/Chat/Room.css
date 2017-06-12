@@ -1,0 +1,94 @@
+.container {
+    position: fixed;
+    top: 10px;
+    left: 220px;
+    width: 500px;
+    height: 430px;
+    box-shadow: 0px 0px 10px #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.header {
+    position: relative;
+    height: 30px;
+    background: #404040;
+    border-radius: 4px 4px 0 0;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.close-icon {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.close-icon:hover {
+    color: #ccc;
+}
+
+.close-icon:active {
+    color: #FAFAFA;
+}
+
+.body {
+    height: 270px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.load-more {
+    height: 20px;
+    width: 100%;
+    background: #f0f0f0;
+    text-align: center;
+    line-height: 20px;
+    color: #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    margin-top: 10px;
+}
+
+.load-more:hover {
+    color: #333;
+}
+
+.load-more:active {
+    color: #ccc;
+}
+
+.load-more i {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.footer {
+    border-top: .5px solid #ccc;
+    height: 100px;
+    border-radius: 0 0 4px 4px;
+}
+
+.footer textarea {
+    height: 60px;
+    width: 100%;
+    border: 0;
+    outline: none;
+    resize : none;
+}
+
+.action {
+    height: 40px;
+    text-align: right;
+    line-height: 40px;
+    padding: 0 5px;
+}
+
+.action button {
+    margin-left: 10px;
+}
