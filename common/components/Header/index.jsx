@@ -3,11 +3,11 @@ import { Link } from 'dva/router';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 import styles from './index.css';
-import Hint from '../Message/Hint';
+import Hint from '../Notice/Hint';
 
 class Header extends React.Component {
   state = {
-    current: 'account',
+    current: '/message',
   }
   handleClick = (e) => {
     this.setState({
@@ -15,7 +15,7 @@ class Header extends React.Component {
     });
   }
   render() {
-    const { userId } = this.props;
+    const { user, unreadNum, dispatch } = this.props;
     return (
       <div className={styles['header']}>
         <Menu
@@ -35,8 +35,9 @@ class Header extends React.Component {
           mode="horizontal"
           className={styles['header-right']}
         >
-          <SubMenu key="/message" title={<Hint userId={userId}/>}></SubMenu>
-          <SubMenu key="/user" title={<Link to="/personal"><img className={styles['photo']} src="/public/images/chh1.jpg" alt="暂无头像"/></Link>}>
+          <SubMenu key="/announcement" title={<Link to="/announcement"><Icon type="mail" /></Link>}></SubMenu>
+          <SubMenu key="/chat" title={<Link to="/chat"><Icon type="message" /></Link>} />
+          <SubMenu key="/user" title={<Link to="/personal"><img className={styles['photo']} src={user.avatar_url} alt="暂无头像"/></Link>}>
             <Menu.Item key="/user">用户名</Menu.Item>
             <Menu.Item key="/personal">
                 <Link to="/personal">个人信息</Link>

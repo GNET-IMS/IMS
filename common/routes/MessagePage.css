@@ -1,3 +1,16 @@
 .box{
     margin-right: 60px;
 }
+
+.box :global(.ant-tabs-bar) {
+    margin-bottom: 0;
+}
+
+.box :global(.ant-tabs.ant-tabs-card) > :global(.ant-tabs-bar) :global(.ant-tabs-tab) {
+    border: 0;
+    background: #fff;
+}
+
+.box :global(.ant-tabs.ant-tabs-card) > :global(.ant-tabs-bar) :global(.ant-tabs-tab-active) {
+    font-weight: bold;
+}

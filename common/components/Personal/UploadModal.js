@@ -56,7 +56,6 @@ class UploadModal extends Component {
 
     if (info.file.status === 'done') {
       this.setState({status: 'successed'});
-      console.log(info.file)
       uploadResponse(info.file.response);
     } else if (info.file.status === 'error') {
       this.setState({

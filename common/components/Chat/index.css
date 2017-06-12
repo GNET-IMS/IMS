@@ -1,0 +1,13 @@
+.user {
+    text-align: center;
+}
+.user img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+}
+
+.user .name {
+    color: #333;
+}

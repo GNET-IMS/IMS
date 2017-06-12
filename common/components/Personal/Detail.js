@@ -23,7 +23,7 @@ class Detail extends Component {
 			}
 
 			let formData = form.getFieldsValue();
-			formData._id = data._id;
+			formData.id = data.id;
 			if (!formData.password) delete formData.password;
 			dispatch({
 				type: 'personal/edit',
@@ -147,8 +147,8 @@ class Detail extends Component {
 								hasFeedback={disabled ? false : true}
 							>
 								{
-									disabled ? <p>{moment(data.birthday).format('YYYY-MM-DD')}</p> : getFieldDecorator('birthday', {
-										initialValue: moment(data.birthday),
+									disabled ? <p>{data.birthday ? moment(data.birthday).format('YYYY-MM-DD') : '暂无'}</p> : getFieldDecorator('birthday', {
+										initialValue: data.birthday ? moment(data.birthday) : undefined,
 										rules: [
 											{ required: false }
 										]
@@ -192,7 +192,7 @@ class Detail extends Component {
 							>
 								{
 									disabled ? <p>{data.title}</p> : getFieldDecorator('title', {
-										initialValue: data.title,
+										initialValue: data.title || undefined,
 										rules: [
 											{ required: false }
 										]

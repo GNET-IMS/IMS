@@ -1,9 +1,9 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { create, view, remove, search, update } from '../../services/users';
-import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import { parseError } from '../../utils/request';
+import MatchPath from '../../utils/MatchPath';
 
 const initialState = {
   query: {},
@@ -26,44 +26,31 @@ export default {
   subscriptions: {
     listSubscriptions({ dispatch, history }) {
       history.listen((location, state) => {
-        if (location.pathname === '/user/list') {
-          dispatch({ type: 'clear' })
-          dispatch({
-            type: 'search',
-            payload: {},
-          });
-        }
-      });
-    },
-    itemSubscriptions({ dispatch, history }) {
-      history.listen((location, state) => {
-        if (pathToRegexp('/user/list/:action+').test(location.pathname)) {
-          dispatch({ type: 'clear' })
-        }
-      })
-    },
-    editSubscriptions({ dispatch, history }) {
-      history.listen((location, state) => {
-        if (pathToRegexp('/user/list/:action/:id').test(location.pathname)) {
-          const match = pathToRegexp('/user/list/:action/:id').exec(location.pathname);
-          const id = match[2];
-          dispatch({
-            type: 'view',
-            payload: id,
-          });
-        }
+        const matchPath = new MatchPath(location.pathname);
+        matchPath
+          .match('/user/list', () => {
+            dispatch({
+              type: 'search',
+              payload: {},
+            });
+          })
+          .match('/user/list/:action/:id', match => {
+            const id = match[2];
+            dispatch({
+              type: 'view',
+              payload: id,
+            });
+          })
+          .unmatched(() => {
+            dispatch({ type: 'clear' })
+          })
       });
     },
   },
 
   effects: {
     *search({ payload }, { put, select }) {
-      const { access_token } = yield select(state => {
-        return {
-          'access_token': state.auth.access_token,
-        }
-      });
-      const { data, err } = yield search(access_token, payload);
+      const { data, err } = yield search(payload);
       if (!err) {
         yield put({
           type: 'setUsers',
@@ -80,12 +67,7 @@ export default {
       return false;
     },
     *view({ payload: id }, { put, select }) {
-      const { access_token } = yield select(state => {
-        return {
-          'access_token': state.auth.access_token,
-        }
-      });
-      const { data, err } = yield view(access_token, id);
+      const { data, err } = yield view(id);
       if (!err) {
         yield put({
           type: 'setUser',
@@ -99,13 +81,12 @@ export default {
       return false;
     },
     *add({ payload }, { put, call, select }) {
-      const { access_token, userId } = yield select(state => {
+      const { userId } = yield select(state => {
         return {
-          access_token: state.auth.access_token,
           userId: state.auth.userId
         }
       });
-      const { data, err } = yield create(access_token, { target: payload, creator: userId });
+      const { data, err } = yield create({ target: payload, creator: userId });
       if (!err) {
         yield message.success('添加成功', 2);
         yield put(routerRedux.goBack());
@@ -115,8 +96,7 @@ export default {
       }
     },
     *edit({ payload }, { put, call, select }) {
-      const access_token = yield select(state => state.auth.access_token);
-      const { data, err } = yield update(access_token, payload);
+      const { data, err } = yield update(payload);
       if (!err) {
         yield message.success('修改成功', 2);
         yield put(routerRedux.goBack());
@@ -127,12 +107,7 @@ export default {
 
     },
     *delete({ payload: id }, { put, select }) {
-      const { access_token } = yield select(state => {
-        return {
-          access_token: state.auth.access_token,
-        }
-      });
-      const { data, err } = yield remove(access_token, id);
+      const { data, err } = yield remove(id);
       if (!err) {
         yield message.success('成功删除用户', 2);
         yield put({ type: 'search' })

@@ -19,7 +19,7 @@ const Edit = (props) => {
           }
 
           let formData = form.getFieldsValue();
-          formData._id = users.current._id;
+          formData.id = users.current.id;
           if (!formData.password) delete formData.password;
           dispatch({
             type: 'users/edit',

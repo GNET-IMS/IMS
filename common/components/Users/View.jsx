@@ -109,7 +109,7 @@ export default Form.create({
                 value: current.name,
             },
             is_admin: {
-                value: current.is_admin? "是" : "否",            
+                value: current.is_admin? "是" : "否",
             },
             username: {
                 value: current.username,
@@ -124,7 +124,7 @@ export default Form.create({
                 value: current.email || '暂无',
             },
             birthday: {
-                value: moment(current.birthday).format('YYYY-MM-DD') || '暂无',
+                value: current.birthday ? moment(current.birthday).format('YYYY-MM-DD') : '暂无',
             },
             title: {
                 value: current.title || '暂无',

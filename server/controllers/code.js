@@ -9,7 +9,7 @@ export function exchangeAccessToken(req, res) {
     const code = req.query.code;
     const basicAuth = new Buffer(`${client.id}:${client.secret}`).toString('base64');
     request.post({
-        url: 'https://localhost:3000/oauth/token',
+        url: 'https://localhost:5000/login/oauth/token',
         agentOptions: {
             rejectUnauthorized: false
         },

@@ -56,7 +56,7 @@ const options = {
  * The HTTPS Authorization Server
  */
 const authServer = httpProxy.createProxyServer({
-  target: 'https://localhost:3000',
+  target: 'http://localhost:3000',
   secure: false,
 });
 
@@ -104,13 +104,13 @@ localServer.on('error', function(e) {
  * 
  */
 https.createServer(options, (req, res) => {
-  if (req.url.startsWith('/oauth/token') || req.url.startsWith('/dialog/authorize') || req.url.startsWith('/login') || req.url.startsWith('/dialog') || req.url.startsWith('/javascripts') || req.url.startsWith('/stylesheets')) {
-    if (req.url === '/dialog/authorize') {
-      req.url = `/dialog/authorize?redirect_uri=http://localhost:8080/code&response_type=code&client_id=admin&scope=offline_access`
+  if (req.url.startsWith('/login') || req.url.startsWith('/public/css/login.css')) {
+    if (req.url === '/login/oauth/authorize') {
+      req.url = `/login/oauth/authorize?redirect_uri=http://localhost:8080/code&response_type=code&client_id=admin&scope=offline_access`
     };
     authServer.web(req, res);
   } else if (req.url.startsWith('/api') || req.url.startsWith('/public') || req.url.startsWith('/socket.io')) {
-    const cookies = cookie.parse(req.headers.cookie);
+    const cookies = cookie.parse(req.headers.cookie || '');
     const { access_token } = cookies;
     req.headers.authorization = `Bearer ${access_token}`;
     resourceServer.web(req, res);

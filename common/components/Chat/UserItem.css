@@ -1,0 +1,66 @@
+.container {
+    height: 50px;
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.container > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.container > img,
+.container > div {
+    float: left;
+}
+
+.info {
+    padding: 0 5px;
+    line-height: 20px;
+}
+
+.name {
+    font-size: 13px;
+    color: #333;
+}
+
+.name font {
+    display: inline-block;
+    max-width: 100px;
+    overflow: hidden;
+}
+
+.hint {
+    line-height: 20px;
+}
+
+.unreadNum {
+    font-size: 9px;
+}
+
+.man,
+.woman {
+    position: relative;
+    top: -6px;
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.man {
+    color: #6CA6CD;
+}
+
+.woman {
+    color: #EE1289;
+}
+
+.action i {
+    display: inline-block;
+    font-size: 13px;
+    margin-right: 5px;
+    color: #333;
+}

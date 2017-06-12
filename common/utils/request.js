@@ -65,7 +65,14 @@ export function parseError(error) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, Object.assign(options, { credentials: 'include' }))
+  return fetch(url, Object.assign({
+    method: 'GET'
+  }, options, {
+      credentials: 'include',
+      headers: Object.assign({
+        'Content-Type': 'application/json',
+      }, options ? options.headers : {})
+    }))
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ({ data }))

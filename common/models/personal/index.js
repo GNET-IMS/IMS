@@ -1,9 +1,9 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 import { view, update } from '../../services/users';
-import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import { parseError } from '../../utils/request';
+import MatchPath from '../../utils/MatchPath';
 
 const initialState = {
   user: {},
@@ -18,26 +18,29 @@ export default {
   subscriptions: {
     listSubscriptions({ dispatch, history }) {
       history.listen((location, state) => {
-        if (location.pathname === '/user/list') {
-          dispatch({ type: 'clear' })
-          dispatch({
-            type: 'search',
-            payload: {},
-          });
-        }
+        const matchPath = new MatchPath(location.name);
+        matchPath
+          .match('/user/list', () => {
+            dispatch({
+              type: 'search',
+              payload: {},
+            });
+          })
+          .unmatched(() => {
+            dispatch({ type: 'clear' })
+          })
       });
     },
   },
 
   effects: {
     *view({ payload }, { put, select }) {
-      const { access_token, userId } = yield select( state => {
+      const { userId } = yield select(state => {
         return {
-          'access_token': state.auth.access_token,
-          userId:  state.auth.userId,
+          userId: state.auth.userId,
         }
-      } );
-      const { data, err } = yield view(access_token, userId);
+      });
+      const { data, err } = yield view(userId);
       if (!err) {
         yield put({
           type: 'setUser',
@@ -51,18 +54,17 @@ export default {
       return false;
     },
     *edit({ payload }, { put, call, select }) {
-      const { access_token, userId } = yield select(state => {
+      const { userId } = yield select(state => {
         return {
-          access_token: state.auth.access_token,
           userId: state.auth.userId,
         }
       });
-      payload._id = userId;
-      const { data, err } = yield update(access_token, payload);
+      payload.id = userId;
+      const { data, err } = yield update(payload);
       if (!err) {
         yield message.success('修改成功', 2);
-        yield put({type: 'view'})
-        yield put({type: 'disable'});
+        yield put({ type: 'view' })
+        yield put({ type: 'disable' });
       } else {
         const error = yield parseError(err);
         yield message.error(`修改失败：${error.message}`, 3);
@@ -76,10 +78,10 @@ export default {
       return { ...state, user };
     },
     disable(state) {
-      return { ...state, disabled: true};
+      return { ...state, disabled: true };
     },
     enable(state) {
-      return { ...state, disabled: false};
+      return { ...state, disabled: false };
     },
     clear(state) {
       return initialState

@@ -3,11 +3,16 @@ import { message } from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import request, { parseError } from '../utils/request';
+import { getCurrentUser, getUnreadMessageNum } from '../services/users';
 
 const initialState = {
-  userId: '58c7b1e697b7d7d6968bb7ff',
-  access_token: '',
-  authentication: false,
+  // userId: sessionStorage.getItem('userId') || '',
+  // isAutnorized: sessionStorage.getItem('userId') ? true : false,
+  userId: '',
+  isAutnorized: false,
+  user: {},
+  unreadNum: '0',
+  socket: {},
 }
 export default {
 
@@ -28,41 +33,79 @@ export default {
   },
 
   effects: {
-    *authorize({ payload }, { select, call, put }) {
-      const { data, err } = yield request('https://localhost:3000/dialog/authorize', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Basic YWRtaW46MTIzNA==',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `grant_type=password&username=${username}&password=${password}&scope=offline-access`,
+    *getCurrentUser({ payload }, { select, call, put }) {
+      const { data, err } = yield getCurrentUser();
+      if (err) {
+        const error = parseError(err);
+        message.error(error.message, 2);
+        return false
+      }
+      yield put({
+        type: 'setUser',
+        payload: data.user,
+      })
+      yield sessionStorage.setItem('userId', data.user.id);
+      yield put({
+        type: 'setUserId',
+        payload: data.user.id,
       })
     },
-    // *token({ payload }, { select, call, put }) {
-    //   const { username, password } = payload;
-    //   const { data, err } = yield request('https://localhost:3000/oauth/token', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Authorization': 'Basic YWRtaW46MTIzNA==',
-    //       'Content-Type': 'application/x-www-form-urlencoded',
-    //     },
-    //     body: `grant_type=password&username=${username}&password=${password}&scope=offline-access`,
-    //   });
+    *init({ payload }, { select, call, put }) {
+      const { data, err } = yield getCurrentUser();
+      if (err) {
+        const error = parseError(err);
+        message.error(error.message, 2);
+        return false;
+      }
+      yield put({
+        type: 'setUser',
+        payload: data.user,
+      })
+      yield sessionStorage.setItem('userId', data.user.id);
+      yield put({
+        type: 'setUserId',
+        payload: data.user.id,
+      })
 
-    //   if (err) {
-    //     // TODO send error message to global show
-    //     const error = yield parseError(err);
-    //     yield message.error(JSON.stringify(error), 5);
-    //     return false;
-    //   }
-    //   console.log(data)
-    //   yield localStorage.setItem('authentication', true);
-    //   yield localStorage.setItem('access_token', data.access_token);
-    //   yield localStorage.setItem('uid', data.uid);
-    // }
+      // const result = yield getUnreadMessageNum(data.user.id);
+      // if (result.err) {
+      //   const error = parseError(result.err);
+      //   message.error(error.message, 2);
+      //   return false;
+      // }
+      // yield put({
+      //   type: 'setUnreadNum',
+      //   payload: result.data.unreadNum
+      // })
+    },
+    *getUnreadNum({ payload }, { select, call, put }) {
+      const userId = yield select(state => state.auth.userId);
+      const { data, err } = yield getUnreadMessageNum(userId);
+      if (err) {
+        const error = parseError(err);
+        message.error(error.message, 2);
+        return false;
+      }
+      yield put({
+        type: 'setUnreadNum',
+        payload: data.unreadNum
+      })
+    }
   },
 
   reducers: {
+    setUser(state, { payload: user }) {
+      return { ...state, user };
+    },
+    setUserId(state, { payload: userId }) {
+      return { ...state, userId };
+    },
+    setUnreadNum(state, { payload: unreadNum }) {
+      return { ...state, unreadNum }
+    },
+    setSocket(state, { payload: socket }) {
+      return { ...state, socket }
+    }
   },
 
 };
