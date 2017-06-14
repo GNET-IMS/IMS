@@ -3,7 +3,6 @@ import { Link } from 'dva/router';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 import styles from './index.css';
-import Hint from '../Notice/Hint';
 
 class Header extends React.Component {
   state = {

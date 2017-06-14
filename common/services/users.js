@@ -48,14 +48,20 @@ export async function remove(id) {
   })
 }
 
-export async function getAnnouncements(id) {
-  return request(`/api/users/${id}/announcements`, {
+export async function getAnnouncements(id, payload) {
+  return request(`/api/users/${id}/announcements?${querystring.stringify(payload)}`, {
     method: 'GET',
   })
 }
 
 export async function pullAnnouncements(id) {
-  return request(`/api/user/${id}/announcements`, {
+  return request(`/api/users/${id}/announcements`, {
     method: 'POST'
+  })
+}
+
+export async function removeAnnouncement(payload) {
+  return request(`/api/users/${payload.userId}/announcements/${payload.announcementId}`, {
+    method: 'DELETE'
   })
 }

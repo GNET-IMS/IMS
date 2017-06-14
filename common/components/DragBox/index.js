@@ -6,6 +6,9 @@ class DragBox extends Component {
     static defaultProps = {
         left: 0,
         top: 0,
+        onDrag: () => { },
+        onStart: () => { },
+        onEnd: () => { }
     }
 
     constructor(props) {
@@ -18,7 +21,7 @@ class DragBox extends Component {
         this.dragBox.style.left = isNaN(left) ? left : left + 'px';
         this.dragBox.style.top = isNaN(top) ? top : top + 'px';
     }
-    
+
 
     onMouseDown = e => {
         this.down = true;
@@ -26,11 +29,13 @@ class DragBox extends Component {
         this.setStartingPosition(x, y);
         this.originCursor = this.dragBox.style.cursor;
         this.dragBox.style.cursor = 'pointer';
+        this.props.onStart(x, y);
     }
 
     onMouseUp = e => {
         this.down = false;
         this.dragBox.style.cursor = this.originCursor;
+        this.props.onEnd(this.startingX, this.startingY);
     }
 
     onMouseMove = e => {
@@ -40,6 +45,7 @@ class DragBox extends Component {
         const offsetY = y - this.startingY;
         this.setStartingPosition(x, y);
         this.setDragBoxPosition(offsetX, offsetY);
+        this.props.onDrag(x, y);
     }
 
     setDragBoxPosition = (offsetX, offsetY) => {
@@ -64,7 +70,7 @@ class DragBox extends Component {
     }
 
     render() {
-        const { children, className, left, top,  ...other } = this.props;
+        const { children, className, left, top, ...other } = this.props;
         return (
             <div
                 ref={ref => this.dragBox = ref}

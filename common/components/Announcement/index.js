@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Tag } from 'antd';
+import { Table, Tag, Button } from 'antd';
 import moment from 'moment';
+import BaseTable from '../BaseTable';
+import LoadMore from '../LoadMore';
+import AddModal from './AddModal';
+import DetailModal from './DetailModal';
 
 import styles from './index.css';
 
@@ -12,13 +16,28 @@ class Announcement extends Component {
     selectedRowKeys: undefined
   }
 
+  onChange = query => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'announcements/getAnnouncements',
+      payload: query
+    })
+  }
+
   onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
 
+  closeDetailModal = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'announcements/toggleModal',
+      payload: false
+    })
+  }
+
   render() {
-    const { loading, dispatch, announcements, showModal } = this.props;
+    const { loading, dispatch, announcements } = this.props;
     const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -41,7 +60,7 @@ class Announcement extends Component {
       render: (text, record, index) => {
         return <a href="javascript:;" onClick={() => {
           dispatch({
-            type: 'notices/view',
+            type: 'announcements/show',
             payload: {
               showModal: true,
               ...record,
@@ -60,7 +79,7 @@ class Announcement extends Component {
         return <span>
           <a href="javascript:;" onClick={() => {
             dispatch({
-              type: 'notices/delete',
+              type: 'announcements/delete',
               payload: record.id
             })
           }}>删除</a>
@@ -70,18 +89,43 @@ class Announcement extends Component {
     return (
       <div>
         {
-          announcements.needUpdate ? 
-            <div>
-              有新的公告，请刷新！
-            </div>
-            : ''
+          announcements.needUpdate ?
+            <LoadMore
+              needUpdateLabel='有新的公告，点击刷新！'
+              onLoad={cb => {
+                const success = () => {
+                  cb(() => {
+                    dispatch({
+                      type: 'announcements/toggleNeedUpdate',
+                      payload: false
+                    })
+                  });
+                }
+
+                dispatch({
+                  type: 'announcements/getAnnouncements',
+                  callback: success
+                })
+              }}
+            /> : ''
         }
-        <Table
+        <div className={styles['operation-bar']}>
+          <Button>删除</Button>
+          <AddModal dispatch={dispatch} />
+        </div>
+        <BaseTable
           rowKey={record => record.id}
           rowSelection={rowSelection}
           dataSource={announcements.announcements}
           columns={columns}
           pagination={announcements.pagination}
+          defaultOnChangeCallback={this.onChange}
+        />
+        <DetailModal
+          visible={announcements.showModal}
+          current={announcements.current}
+          onOk={this.closeDetailModal}
+          onCancel={this.closeDetailModal}
         />
       </div>
     )

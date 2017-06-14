@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from 'antd';
+import { Table } from 'antd';
 
 import styles from './index.css';
 
@@ -23,7 +23,7 @@ class BaseTable extends Component {
   }
 
   render() {
-    const { pagination, ...others, } = this.props;
+    const { pagination, ...others } = this.props;
 
     return (
       <div>

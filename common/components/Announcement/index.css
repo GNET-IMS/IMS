@@ -1,0 +1,10 @@
+.operation-bar {
+    text-align: right;
+    padding: 6px;
+}
+
+.operation-bar > div, 
+.operation-bar > button {
+    display: inline-block;
+    margin-left: 10px;
+}

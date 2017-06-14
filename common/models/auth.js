@@ -4,6 +4,8 @@ import pathToRegexp from 'path-to-regexp';
 import querystring from 'querystring';
 import request, { parseError } from '../utils/request';
 import { getCurrentUser, getUnreadMessageNum } from '../services/users';
+import io from 'socket.io-client';
+import { ROOT_PATH } from '../constants';
 
 const initialState = {
   // userId: sessionStorage.getItem('userId') || '',
@@ -50,7 +52,7 @@ export default {
         payload: data.user.id,
       })
     },
-    *init({ payload }, { select, call, put }) {
+    *init({ payload, callback }, { select, call, put }) {
       const { data, err } = yield getCurrentUser();
       if (err) {
         const error = parseError(err);
@@ -67,30 +69,24 @@ export default {
         payload: data.user.id,
       })
 
-      // const result = yield getUnreadMessageNum(data.user.id);
-      // if (result.err) {
-      //   const error = parseError(result.err);
-      //   message.error(error.message, 2);
-      //   return false;
-      // }
-      // yield put({
-      //   type: 'setUnreadNum',
-      //   payload: result.data.unreadNum
-      // })
+      //连接socket-io
+      const userId = data.user.id;
+      const socket = io.connect(`${ROOT_PATH}`);
+
+      socket.on('connect', () => {
+        console.log('connect!');
+        socket.emit('init', userId);
+        callback(socket);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('disconnect!');
+      });
+
+      socket.on('error', (e) => {
+        console.log('error!', e);
+      });
     },
-    *getUnreadNum({ payload }, { select, call, put }) {
-      const userId = yield select(state => state.auth.userId);
-      const { data, err } = yield getUnreadMessageNum(userId);
-      if (err) {
-        const error = parseError(err);
-        message.error(error.message, 2);
-        return false;
-      }
-      yield put({
-        type: 'setUnreadNum',
-        payload: data.unreadNum
-      })
-    }
   },
 
   reducers: {
